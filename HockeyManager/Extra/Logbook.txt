@@ -1,0 +1,12 @@
+2023-03-22
+	{
+	jobade på data för minna spelare i form av en excel fil som jag importerade til phpmyadmin
+	}
+2023-03-23
+	{
+	jobade på data för minna spelare och jobade på wireframe för hemsidan
+	}
+2023-03-24
+	{
+	jobbade vidare på wireframe
+	}
