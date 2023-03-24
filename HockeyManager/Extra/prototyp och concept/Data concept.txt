@@ -1,0 +1,98 @@
+User:
+ID
+Role
+Email
+Username
+Password
+Currency
+
+Player:
+ID
+TeamID
+Firstname
+Lastname
+Role
+Power
+Price
+GamesPlayed
+Goals
+Shots
+ShotsAgainst
+Saves
+
+Team:
+ID
+OwnerID
+Name
+Logocode
+LeftForwardPlayerID 
+RightForwardPlayerID
+CenterPlayerID
+LeftDefenderPlayerID
+RightDefenderPlayerID
+GoliePlayerID
+GamesPlayed
+Goals
+GoalsAgainst
+Shots
+ShotsAgainst
+
+Trade:
+ID
+TeamID
+PlayerID
+Date
+Type
+Price
+
+Match:
+ID
+HomeTeamID
+AwayTeamID
+WinningTeamID
+Date
+1stPeriod
+2ndPeriod
+3rdPeriod
+OverTime
+Final
+
+Role IDs: 
+1 LeftForward
+2 RightForward
+3 Center
+4 LeftDefender
+5 RightDefender
+6 Golie
+
+logocode example: 5,1,3,8,4,2
+5(shape of logo) 
+1(background color of logo)
+3(First insideShape of logo)
+8(First insideColor of logo)
+4(Secound insideShape of logo)
+2(Secound insideColor of logo)
+
+Logo shapes:
+Shape 1: Circle
+Shape 2: Square
+
+Inside logo shapes:
+Shape 1: cross
+Shape 2: X
+Shape 3: Line along top
+Shape 4: Horizantal Line
+Shape 5: Line along bottom
+Shape 6: Vertical Line
+Shape 7: Line along top
+Shape 8: Line along bottom
+Shape 9: None
+
+Color 1: Yellow
+Color 2: Green
+Color 3: Blue
+Color 4: Violet
+Color 5: Red
+Color 6: Orange
+Color 7: Black
+Color 8: White
