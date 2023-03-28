@@ -16,3 +16,23 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.Action-button {
+    background-color: rgba(0,0,0,0.8);
+    color: white;
+    font-size: 6vmin;
+    text-decoration: none;
+    width: 30vmin;
+    padding: 5vmin;
+    text-align: center;
+    backdrop-filter: blur(3px);
+    border: 1px solid rgba(255,255,255, 0.1);
+    border-radius: 100px;
+    box-shadow: 2px 2px 2px rgba(0,0,0, 0.1);
+    cursor: pointer;
+}
+
+.Action-button:hover {
+    background-color: rgba(0,0,0, 1);
+    border: 1px solid rgba(0,0,0, 0.3);
+}

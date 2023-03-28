@@ -424,4 +424,4 @@ public class Match
     //In this implementation, there is a 1 in 10 chance that a penalty occurs each minute. If a penalty occurs, a player from the team with possession is randomly chosen to be sent off for 2 minutes. The player's LPE is temporarily removed from their team's total, and the team plays with one less player for the duration of the penalty.
     //During the penalty, the `PlayMinute` method is still called for each minute, but the penalized player's `isPenalized` property is set to `true`, which prevents them from participating in the game until the penalty time has expired. After the penalty time has elapsed, the player is allowed to return to the ice, and their LPE is added back to their team's total.
     //Note that the implementation of penalties is just one way to handle them, and there are many other ways you could design the game to include them.
-}"
+}

@@ -1,0 +1,19 @@
+nav {
+    background-color: #3a24f0;
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+    position: sticky;
+    top: 0px;
+}
+
+    nav a {
+        color: white;
+        text-decoration: none;
+        margin: 0px 20px;
+        font-size: 1.3em;
+    }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
