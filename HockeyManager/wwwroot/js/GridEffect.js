@@ -1,4 +1,5 @@
-﻿const wrapper = document.getElementById("tiles");
+﻿
+const wrapper = document.getElementById("tiles");
 
 let columns = 0,
     rows = 0,

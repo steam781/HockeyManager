@@ -10,32 +10,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&family=Rubik:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="~/css/site.css">
+    <link rel="stylesheet" href="~/css/Outside.css">
     <link rel="stylesheet" href="~/css/GridEffect.css">
     
 </head>
 <body>
     <!-- partial:index.partial.html -->
     <div id="tiles"></div>
-
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">HockeyManager</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
 
     <h1 id="title" class="centered">
         Hockey Manager
@@ -49,10 +30,21 @@
 
     <a href="" https://www.google.com" id="button" class="Action-button centered">Play</a>
 
+    <a id="about-link" class="meta-link" href="" target="_blank">
+        <i class="fa-solid fa-link"></i>
+        <span>About</span>
+    </a>
+
+    <a id="rule-link" class="meta-link" href="" target="_blank">
+        <i class="fa-brands fa-youtube"></i>
+        <span>Rules</span>
+    </a>
+
     <!-- partial -->
     <script src='https://codepen.io/Hyperplexed/pen/xxYJYjM/54407644e24173ad6019b766443bf2a6.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js'></script>
     <script src="~/js/GridEffect.js"></script>
+
 
 </body>
 </html>

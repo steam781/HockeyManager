@@ -105,11 +105,6 @@ body {
     }
 
 #button {
-    color: var(--g2);
-    width: 30vmin;
-    padding: 5vmin;
-    opacity: 0;
-    pointer-events: none;
     transition: opacity 1200ms ease;
     z-index: 2;
 }
@@ -130,9 +125,11 @@ body {
     z-index: 1;
 }
 
+
+
 /* -- YouTube Link Styles -- */
 
-/*body.menu-toggled > .meta-link > span {
+body.menu-toggled > .meta-link > span {
     color: rgb(30, 30, 30);
 }
 
@@ -140,11 +137,12 @@ body {
     bottom: 60px;
 }
 
-    #source-link > i {
-        color: rgb(94, 106, 210);
-    }
+#about-link > i {
+    color: rgb(94, 106, 210);
+    bottom: 20px;
+}
 
-#yt-link > i {
+#rule-link > i {
     color: rgb(239, 83, 80);
 }
 
@@ -181,4 +179,4 @@ body {
         color: white;
         font-family: "Rubik", sans-serif;
         transition: color 400ms;
-    }*/
+    }
