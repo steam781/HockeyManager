@@ -1,0 +1,53 @@
+﻿<style>
+    td {
+        border: solid 1px black;
+        padding: 10px;
+    }
+</style>
+@model List<Produkt>
+<a class="nav-link" asp-area="" asp-controller="Produkt" asp-action="newProdukt">läg till Produkt</a>
+<div id="ProduktList">
+    @{
+        <h1>@ViewBag.Meddelande</h1>
+        <table>
+            <tr>
+                <td>Name:</td>
+                <td>Info:</td>
+                <td>Stock:</td>
+                <td>price:</td>
+                <td>id:</td>
+                <td></td>
+                <td></td>
+            </tr>
+
+            @foreach (Produkt P in Model)
+            {
+
+                <tr>
+                    <td>
+                        @P.produktnamn
+                    </td>
+                    <td>
+                        @P.produktinfo (@P.tillverkare)
+                    </td>
+                    <td>
+                        @P.stock
+                    </td>
+                    <td>
+                        @P.pris
+                    </td>
+                    <td>
+                        @P.id
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "redigeraProdukt", "Produkt", new {id = @P.id})
+                    </td>
+                    <td>
+                        @Html.ActionLink("Delete", "deleteProdukt", "Produkt", new {id = @P.id}, new { onclick = "return confirm('Are you sure you want to delete?');" })
+                    </td>
+                </tr>
+
+            }
+        </table>
+    }
+</div>

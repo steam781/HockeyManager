@@ -28,17 +28,47 @@
         <i id="icon" class="fa-solid fa-goal-net"></i>
     </div>
 
-    <a href="" https://www.google.com" id="button" class="Action-button centered">Play</a>
+    <div id="login" class="centerdContent">
+        <div class="row">
+            <div class="col-md-6">
+                <form asp-action="Login" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    @if (ViewBag.LoginError != null)
+                    {
+                        <div class="form-group">
+                            <span class="text-danger">
+                                Användarnamn eller lösenord är felkatig!
+                            </span>
+                        </div>
+                    }
+                    <div class="form-group">
+                        <label for="mailadress">Email address</label>
+                        <input type="email" class="form-control" id="mailadress" name="mailadress" placeholder="blind@gmail.com"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="********"/>
+                        @ViewBag.MeddelandePass
+                    </div>
+                    <button type="submit" class="Action-button">Login</button>
+                    <button type="submit" class="Action-button">Login</button>
+                    <label>
+                        <input type="checkbox" class="form-control" id="checkbox" name="checkbox" checked="checked" name="remember"> Remember me
+                    </label>
+                </form>
+            </div>
+        </div>
+    </div>
 
-    <a id="about-link" class="meta-link" href="" target="_blank">
-        <i class="fa-solid fa-link"></i>
-        <span>About</span>
-    </a>
+    <a id="rule-link" class="meta-link" asp-area="" asp-controller="Home" asp-action="Rules">
+  <i class="fa-solid fa-book"></i>
+  <span>Rules</span>
+</a>
 
-    <a id="rule-link" class="meta-link" href="" target="_blank">
-        <i class="fa-brands fa-youtube"></i>
-        <span>Rules</span>
-    </a>
+<a id="about-link" class="meta-link" asp-area="" asp-controller="Home" asp-action="About">
+  <i class="fa-solid fa-question"></i>
+  <span>About</span>
+</a>
 
     <!-- partial -->
     <script src='https://codepen.io/Hyperplexed/pen/xxYJYjM/54407644e24173ad6019b766443bf2a6.js'></script>

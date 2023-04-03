@@ -17,14 +17,31 @@ body {
   margin-bottom: 60px;
 }
 
+.centered {
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.centerdContent {
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+}
+
 .Action-button {
     background-color: rgba(0,0,0,0.8);
+    border: none;
     color: white;
-    font-size: 6vmin;
-    text-decoration: none;
-    width: 30vmin;
-    padding: 5vmin;
+    padding: 15px 32px;
     text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
     backdrop-filter: blur(3px);
     border: 1px solid rgba(255,255,255, 0.1);
     border-radius: 100px;
@@ -32,7 +49,63 @@ body {
     cursor: pointer;
 }
 
+input[type=email], input[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+
 .Action-button:hover {
     background-color: rgba(0,0,0, 1);
     border: 1px solid rgba(0,0,0, 0.3);
 }
+
+/* -- Link Styles -- */
+
+body.menu-toggled > .meta-link > span {
+    color: rgb(30, 30, 30);
+}
+
+#rule-link {
+    bottom: 60px;
+}
+
+.meta-link {
+    align-items: center;
+    backdrop-filter: blur(3px);
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    bottom: 10px;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    display: inline-flex;
+    gap: 5px;
+    left: 10px;
+    padding: 10px 20px;
+    position: fixed;
+    text-decoration: none;
+    transition: background-color 400ms, border-color 400ms;
+    z-index: 10000;
+    color: rgb(46, 117, 182);
+}
+
+    .meta-link:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .meta-link > i, .meta-link > span {
+        height: 20px;
+        line-height: 20px;
+    }
+
+    .meta-link > span {
+        color: white;
+        font-family: "Rubik", sans-serif;
+        transition: color 400ms;
+    }

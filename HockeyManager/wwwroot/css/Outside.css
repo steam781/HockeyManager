@@ -17,11 +17,3 @@ nav {
         nav a:hover {
             text-decoration: underline;
         }
-
-#button {
-    color: var(--g2);
-    width: 30vmin;
-    padding: 5vmin;
-    opacity: 0;
-    pointer-events: none;
-}
