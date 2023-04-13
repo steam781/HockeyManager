@@ -5,6 +5,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!--important to transfer to other sites-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!--important to transfer to other sites-->
     <title>Hockey Manager</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,25 +31,25 @@
     </div>
 
     <div id="login" class="centerdContent">
-        <div class="row">
-            <div class="col-md-6">
+        <div>
+            <div>
                 <form asp-action="Login" method="post">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     @if (ViewBag.LoginError != null)
                     {
-                        <div class="form-group">
-                            <span class="text-danger">
+                        <div>
+                            <span>
                                 Användarnamn eller lösenord är felkatig!
                             </span>
                         </div>
                     }
-                    <div class="form-group">
+                    <div>
                         <label for="mailadress">Email address</label>
-                        <input type="email" class="form-control" id="mailadress" name="mailadress" placeholder="blind@gmail.com"/>
+                        <input type="email" id="mailadress" name="mailadress" placeholder="blind@gmail.com"/>
                     </div>
-                    <div class="form-group">
+                    <div>
                         <label for="password">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" placeholder="********"/>
+                        <input type="password" id="password" name="password" placeholder="********"/>
                         @ViewBag.MeddelandePass
                     </div>
                     <button type="submit" class="Action-button">Login</button>
