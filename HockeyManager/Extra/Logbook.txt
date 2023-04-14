@@ -26,7 +26,11 @@
 	{
 	jobbade på index sidorna och Models
 	}
-2023-04-03
+2023-04-13
 	{
 	fixade litte porblem på sidan
+	}
+2023-04-14
+	{
+	fixade litte på login och controllers/models
 	}
