@@ -34,3 +34,7 @@
 	{
 	fixade litte på login och controllers/models
 	}
+2023-04-20
+	{
+	fixade grafiska manual och personas, 
+	}
