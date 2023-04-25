@@ -38,3 +38,7 @@
 	{
 	fixade grafiska manual och personas, 
 	}
+2023-04-24
+	{
+	fixade grafiska manual och användar senario
+	}
