@@ -42,3 +42,7 @@
 	{
 	fixade grafiska manual och användar senario
 	}
+2023-04-25
+	{
+	fixade contorolers och models
+	}

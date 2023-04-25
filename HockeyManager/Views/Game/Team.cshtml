@@ -1,10 +1,10 @@
-﻿@*<style>
+﻿<style>
     td {
         border: solid 1px black;
         padding: 10px;
     }
 </style>
-@model List<Produkt>
+@model List<Team>
 <a class="nav-link" asp-area="" asp-controller="Produkt" asp-action="newProdukt">läg till Produkt</a>
 <div id="ProduktList">
     @{
@@ -12,42 +12,38 @@
         <table>
             <tr>
                 <td>Name:</td>
-                <td>Info:</td>
-                <td>Stock:</td>
-                <td>price:</td>
-                <td>id:</td>
-                <td></td>
+                <td>Number:</td>
+                <td>Role:</td>
+                <td>Power:</td>
+                <td>ID:</td>
                 <td></td>
             </tr>
 
-            @foreach (Produkt P in Model)
+            @foreach (Player P in playerList)
             {
 
                 <tr>
                     <td>
-                        @P.produktnamn
+                        @P.firstname @P.lastname
                     </td>
                     <td>
-                        @P.produktinfo (@P.tillverkare)
+                        @P.number
                     </td>
                     <td>
-                        @P.stock
+                        @P.role
                     </td>
                     <td>
-                        @P.pris
+                        @P.power
                     </td>
                     <td>
-                        @P.id
+                        @P.ID
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "redigeraProdukt", "Produkt", new {id = @P.id})
-                    </td>
-                    <td>
-                        @Html.ActionLink("Delete", "deleteProdukt", "Produkt", new {id = @P.id}, new { onclick = "return confirm('Are you sure you want to delete?');" })
+                        @Html.ActionLink("Edit", "addRoster", "Team", new {id = @P.id})
                     </td>
                 </tr>
 
             }
         </table>
     }
-</div>*@
+</div>

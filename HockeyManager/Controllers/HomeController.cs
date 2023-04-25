@@ -35,8 +35,8 @@ namespace HockeyManager.Controllers
                 return View("Index");
             }
 
-            HttpContext.Session.SetString("mailadress", newUser.mailadress);
-            HttpContext.Session.SetString("name", newUser.TeamID);
+            HttpContext.Session.SetString("id", newUser.id);
+            HttpContext.Session.SetString("teamID", newUser.TeamID);
             HttpContext.Session.SetString("role", newUser.Role);
 
             return RedirectToAction("Index", "Home");

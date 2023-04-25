@@ -58,6 +58,44 @@ namespace HockeyManager.Models
             return list;
         }
 
+        public static List<Player> getAllOwnedPlayers(int teamID)
+        {
+            string conStr = "server=46.246.45.183;user=OliverEc;port=3306;database=HockeyManager_OE;password=YROSBKEE";
+
+            List<Player> players = new List<Player>();
+            MySqlConnection conn = new MySqlConnection(conStr);
+            MySqlCommand MyCom = new MySqlCommand("SELECT * FROM `Player` WHERE `TeamID` = @teamID", conn);
+            MyCom.Parameters.AddWithValue("@teamID", teamID);
+
+            conn.Open();
+
+            MySqlDataReader reader = MyCom.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Player p = new Player();
+                p.ID = reader.GetInt32("ID");
+                p.teamID = reader.GetInt32("teamID");
+                p.number = reader.GetInt32("number");
+                p.firstname = reader.GetString("firstname");
+                p.lastname = reader.GetString("lastname");
+                p.role = reader.GetString("role");
+                p.power = reader.GetInt32("power");
+                p.price = reader.GetInt32("price");
+                p.gamesplayed = reader.GetInt32("gamesplayed");
+                p.goals = reader.GetInt32("goals");
+                p.shots = reader.GetInt32("shots");
+                p.shotsagainst = reader.GetInt32("shotsagainst");
+                p.saves = reader.GetInt32("saves");
+                players.Add(p);
+            }
+
+            MyCom.Dispose();
+            conn.Close();
+
+            return list;
+        }
+
         public static Player getSinglePlayerById(int id)
         {
 
@@ -101,13 +139,20 @@ namespace HockeyManager.Models
             string conStr = "server=46.246.45.183;user=OliverEc;port=3306;database=HockeyManager_OE;password=YROSBKEE";
 
             MySqlConnection conn = new MySqlConnection(conStr);
-            MySqlCommand MyCom = new MySqlCommand("UPDATE `Player` SET `TeamID`='@teamID',`Number`='@number',`Firstname`='@firstname',`Lastname`='@lastname',`Role`='@role',`Power`='@power',`Price`='@price',`GamesPlayed`='@gamesplayed',`Goals`='@goals',`Shots`='@shots',`ShotsAgainst`='@shotsagainst]',`Saves`='@saves' where `ID`='@ID'", conn);
-            MyCom.Parameters.AddWithValue("@PRNAMN", p.Playernamn);
-            MyCom.Parameters.AddWithValue("@TILL", p.tillverkare);
-            MyCom.Parameters.AddWithValue("@INFO", p.Playerinfo);
-            MyCom.Parameters.AddWithValue("@STOCK", p.stock);
-            MyCom.Parameters.AddWithValue("@PRIS", p.pris);
-            MyCom.Parameters.AddWithValue("@ID", p.id);
+            MySqlCommand MyCom = new MySqlCommand("UPDATE `Player` SET `teamID`='@teamID',`number`='@number',`firstname`='@firstname',`lastname`='@lastname',`role`='@role',`power`='@power',`price`='@price',`gamesPlayed`='@gamesplayed',`goals`='@goals',`shots`='@shots',`shotsagainst`='@shotsagainst]',`saves`='@saves' where `ID`='@ID'", conn);
+            MyCom.Parameters.AddWithValue("@teamID", p.teamID);
+            MyCom.Parameters.AddWithValue("@number", p.number);
+            MyCom.Parameters.AddWithValue("@firstname", p.firstname);
+            MyCom.Parameters.AddWithValue("@lastname", p.lastname);
+            MyCom.Parameters.AddWithValue("@role", p.role);
+            MyCom.Parameters.AddWithValue("@power", p.power);
+            MyCom.Parameters.AddWithValue("@price", p.price);
+            MyCom.Parameters.AddWithValue("@gamesplayed", p.gamesplayed);
+            MyCom.Parameters.AddWithValue("@goals", p.goals);
+            MyCom.Parameters.AddWithValue("@shots", p.shots);
+            MyCom.Parameters.AddWithValue("@shotsagainst", p.shotsagainst);
+            MyCom.Parameters.AddWithValue("@saves", p.saves);
+            MyCom.Parameters.AddWithValue("@ID", p.ID);
             conn.Open();
 
             int rader = MyCom.ExecuteNonQuery();
@@ -125,12 +170,20 @@ namespace HockeyManager.Models
             string conStr = "server=46.246.45.183;user=OliverEc;port=3306;database=HockeyManager_OE;password=YROSBKEE";
 
             MySqlConnection conn = new MySqlConnection(conStr);
-            MySqlCommand MyCom = new MySqlCommand("INSERT INTO Player(Playernamn, Playerinfo, stock, tillverkare, pris) VALUES (@PRNAMN, @INFO, @STOCK, @TILL, @PRIS)", conn);
-            MyCom.Parameters.AddWithValue("@PRNAMN", p.Playernamn);
-            MyCom.Parameters.AddWithValue("@TILL", p.tillverkare);
-            MyCom.Parameters.AddWithValue("@INFO", p.Playerinfo);
-            MyCom.Parameters.AddWithValue("@STOCK", p.stock);
-            MyCom.Parameters.AddWithValue("@PRIS", p.pris);
+            MySqlCommand MyCom = new MySqlCommand("INSERT INTO Player(teamID, number, firstname, lastname, role, power, price, gamesplayed, goals, shots, shotsagainst, saves, ID) VALUES (@teamID, @number, @firstname, @lastname, @role, @power, @price, @gamesplayed, @goals, @shots, @shotsagainst, @saves, @ID)", conn);
+            MyCom.Parameters.AddWithValue("@teamID", p.teamID);
+            MyCom.Parameters.AddWithValue("@number", p.number);
+            MyCom.Parameters.AddWithValue("@firstname", p.firstname);
+            MyCom.Parameters.AddWithValue("@lastname", p.lastname);
+            MyCom.Parameters.AddWithValue("@role", p.role);
+            MyCom.Parameters.AddWithValue("@power", p.power);
+            MyCom.Parameters.AddWithValue("@price", p.price);
+            MyCom.Parameters.AddWithValue("@gamesplayed", p.gamesplayed);
+            MyCom.Parameters.AddWithValue("@goals", p.goals);
+            MyCom.Parameters.AddWithValue("@shots", p.shots);
+            MyCom.Parameters.AddWithValue("@shotsagainst", p.shotsagainst);
+            MyCom.Parameters.AddWithValue("@saves", p.saves);
+            MyCom.Parameters.AddWithValue("@ID", p.ID);
             conn.Open();
 
             int rader = MyCom.ExecuteNonQuery();
@@ -149,7 +202,7 @@ namespace HockeyManager.Models
 
             MySqlConnection conn = new MySqlConnection(conStr);
             MySqlCommand MyCom = new MySqlCommand("DELETE FROM Player WHERE id = @ID", conn);
-            MyCom.Parameters.AddWithValue("@ID", p.id);
+            MyCom.Parameters.AddWithValue("@ID", p.ID);
             conn.Open();
 
             int rader = MyCom.ExecuteNonQuery();

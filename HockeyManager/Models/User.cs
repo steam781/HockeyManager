@@ -35,11 +35,12 @@ namespace HockeyManager.Models
             User singleE = new User();
             if (reader.Read())
             {
-                singleE.id = reader.GetInt32("id");
-                singleE.name = reader.GetString("name");
-                singleE.mailadress = reader.GetString("mailadress");
-                singleE.password = reader.GetString("password");
-                singleE.role = reader.GetString("role");
+                singleE.ID = reader.GetInt32("ID");
+                singleE.Role = reader.GetString("Role");
+                singleE.Email = reader.GetString("Email");
+                singleE.Username = reader.GetString("Username");
+                singleE.Password = reader.GetString("Password");
+                singleE.Currency = reader.GetString("Currency");
             }
             else
             {
