@@ -10,6 +10,7 @@ namespace HockeyManager.Models
     public class User
     {
         public int ID { get; set; } = 0;
+        public int TeamID { get; set; } = 0;
         public string Role { get; set; } = "";
 
         [Required(ErrorMessage = "Ange valid mailadress")]
@@ -28,7 +29,7 @@ namespace HockeyManager.Models
         {
             string conStr = "server=46.246.45.183;user=OliverEc;port=3306;database=OliverEc_DB;password=YROSBKEE";
             MySqlConnection conn = new MySqlConnection(conStr);
-            MySqlCommand MyCom = new MySqlCommand("Select * from Employee where mailadress = @MAIL", conn);
+            MySqlCommand MyCom = new MySqlCommand("SELECT * FROM User LEFT JOIN Team ON User.ID = Team.OwnerID where Email = @MAIL", conn);
             MyCom.Parameters.AddWithValue("@MAIL", mail);
             conn.Open();
             MySqlDataReader reader = MyCom.ExecuteReader();
@@ -36,6 +37,7 @@ namespace HockeyManager.Models
             if (reader.Read())
             {
                 singleE.ID = reader.GetInt32("ID");
+                singleE.TeamID = reader.GetInt32("ID");
                 singleE.Role = reader.GetString("Role");
                 singleE.Email = reader.GetString("Email");
                 singleE.Username = reader.GetString("Username");

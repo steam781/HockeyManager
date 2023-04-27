@@ -21,11 +21,11 @@ namespace HockeyManager.Models
         public int saves { get; set; } = 0;
         public int ID { get; set; } = 0;
 
-        public static List<Players> getAllUnownedPlayers()
+        public static List<Player> getAllUnownedPlayers()
         {
             string conStr = "server=46.246.45.183;user=OliverEc;port=3306;database=HockeyManager_OE;password=YROSBKEE";
 
-            List<Players> list = new List<Players>();
+            List<Player> list = new List<Player>();
             MySqlConnection conn = new MySqlConnection(conStr);
             MySqlCommand MyCom = new MySqlCommand("SELECT * FROM `Player` WHERE `TeamID` = 0", conn);
 
@@ -93,7 +93,7 @@ namespace HockeyManager.Models
             MyCom.Dispose();
             conn.Close();
 
-            return list;
+            return players;
         }
 
         public static Player getSinglePlayerById(int id)

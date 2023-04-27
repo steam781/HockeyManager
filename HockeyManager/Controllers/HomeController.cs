@@ -26,17 +26,18 @@ namespace HockeyManager.Controllers
 
             if (!ModelState.IsValid) return View("index");
 
-            User nyBesökare = User.GetUserByMail(usr.Email);
+            User newUser = HockeyManager.Models.User.GetUserByMail(usr.Email);
+           
 
             // Check if password is correct
-            if (nyBesökare.Password != usr.password)
+            if (newUser.Password != usr.Password)
             {
                 ViewBag.MeddelandePass = "Incorrect password";
                 return View("Index");
             }
 
-            HttpContext.Session.SetString("id", newUser.id);
-            HttpContext.Session.SetString("teamID", newUser.TeamID);
+            HttpContext.Session.SetInt32("id", newUser.ID);
+            HttpContext.Session.SetInt32("teamID", newUser.TeamID);
             HttpContext.Session.SetString("role", newUser.Role);
 
             return RedirectToAction("Index", "Home");
