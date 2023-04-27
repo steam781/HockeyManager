@@ -40,7 +40,7 @@ namespace HockeyManager.Controllers
             HttpContext.Session.SetInt32("teamID", newUser.TeamID);
             HttpContext.Session.SetString("role", newUser.Role);
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Home", "Game");
         }
 
         public IActionResult Rules()

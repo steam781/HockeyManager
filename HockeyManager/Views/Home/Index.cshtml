@@ -33,7 +33,7 @@
     <div id="login" class="centerdContent">
         <div>
             <div>
-                <form asp-action="Login" method="post">
+                <form asp-action="Login" method="post" id="form">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     @if (ViewBag.LoginError != null)
                     {
@@ -45,23 +45,22 @@
                     }
                     <div>
                         <label for="mailadress">Email address</label>
-                        <input type="email" id="Email" name="Email" placeholder="blind@gmail.com"/>
+                        <input type="email" id="Email" name="Email" placeholder="blind@gmail.com" required value="rick.eckerstrom@gmail.com"/>
                     </div>
                     <div>
                         <label for="password">Password</label>
-                        <input type="password" id="Password" name="Password" placeholder="********"/>
+                        <input type="password" id="Password" name="Password" placeholder="********" required value="Oliver04"/>
                         @ViewBag.MeddelandePass
                     </div>
-                    <button type="submit" class="Action-button">Login</button>
+                    <button type="submit" id="submit" class="Action-button">Login</button>
                     <a class="action-button" asp-area="" asp-controller="Home" asp-action="Register">Register</a>
                     <label>
-                        <input type="checkbox" class="form-control" id="checkbox" name="checkbox" checked="checked" name="remember"> Remember me
+                        <input type="checkbox" class="form-control" id="rememberme" name="checkbox" checked="checked" name="remember"> Remember me
                     </label>
                 </form>
             </div>
         </div>
     </div>
-
     <a id="rule-link" class="meta-link" asp-area="" asp-controller="Home" asp-action="Rules">
   <i class="fa-solid fa-book"></i>
   <span>Rules</span>
@@ -76,6 +75,66 @@
     <script src='https://codepen.io/Hyperplexed/pen/xxYJYjM/54407644e24173ad6019b766443bf2a6.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js'></script>
     <script src="~/js/GridEffect.js"></script>
+    <script>
+        const encryptedMail = localStorage.getItem('Email');
+        const encryptedPass = localStorage.getItem('Password');
+        console.log(encryptedMail + ", " + encryptedPass)
+
+        // Define the secret key used for encryption/decryption
+        const secretKey = 'mysecretkey';
+
+        // Function to decrypt data using the secret key
+        function decryptData(encryptedData) {
+            const bytes = CryptoJS.AES.decrypt(encryptedData, secretKey);
+            const decryptedData = bytes.toString(CryptoJS.enc.Utf8);
+            return decryptedData;
+        }
+
+        if (encryptedMail && encryptedPass) {
+            const mail = decryptData(encryptedMail);
+            const pass = decryptData(encryptedPass);
+
+            document.getElementById('Email').value = mail;
+            document.getElementById('Password').value = pass;
+            link.click(document.getElementById('submit'));
+        }
+
+        // Function to encrypt data using the secret key
+        function encryptData(data) {
+            const encryptedData = CryptoJS.AES.encrypt(data, secretKey).toString();
+            return encryptedData;
+        }
+
+        const rememberMeCheckbox = document.getElementById('rememberme');
+        console.log(rememberMeCheckbox)
+
+        // Add a submit event listener to the form
+        document.addEventListener("submit", (event) => {
+            event.preventDefault();
+            // If the "remember me" checkbox is checked, encrypt the data before storing it
+            if (rememberMeCheckbox.checked) {
+                console.log("yes")
+                const email = document.getElementById('Email').value;
+                const password = document.getElementById('Password').value;
+                const encryptedEmail = encryptData(email);
+                const encryptedPassword = encryptData(password);
+                localStorage.setItem('Email', encryptedEmail);
+                localStorage.setItem('Password', encryptedPassword);
+            }
+            var form = document.getElementById("form");
+            var formData = new FormData(form);
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', form.action, true);
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    // Handle success response
+                } else {
+                    // Handle error response
+                }
+            };
+            xhr.send(formData);
+        });
+    </script>
 
 
 </body>

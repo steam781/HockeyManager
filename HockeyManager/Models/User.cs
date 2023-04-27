@@ -11,6 +11,7 @@ namespace HockeyManager.Models
     {
         public int ID { get; set; } = 0;
         public int TeamID { get; set; } = 0;
+        private string SecurityKey { get; set; } = "";
         public string Role { get; set; } = "";
 
         [Required(ErrorMessage = "Ange valid mailadress")]
@@ -27,7 +28,7 @@ namespace HockeyManager.Models
 
         public static User GetUserByMail(string mail)
         {
-            string conStr = "server=46.246.45.183;user=OliverEc;port=3306;database=OliverEc_DB;password=YROSBKEE";
+            string conStr = "server=46.246.45.183;user=OliverEc;port=3306;database=HockeyManager_OE;password=YROSBKEE";
             MySqlConnection conn = new MySqlConnection(conStr);
             MySqlCommand MyCom = new MySqlCommand("SELECT * FROM User LEFT JOIN Team ON User.ID = Team.OwnerID where Email = @MAIL", conn);
             MyCom.Parameters.AddWithValue("@MAIL", mail);
@@ -37,7 +38,7 @@ namespace HockeyManager.Models
             if (reader.Read())
             {
                 singleE.ID = reader.GetInt32("ID");
-                singleE.TeamID = reader.GetInt32("ID");
+                singleE.TeamID = reader.GetInt32("TeamID");
                 singleE.Role = reader.GetString("Role");
                 singleE.Email = reader.GetString("Email");
                 singleE.Username = reader.GetString("Username");
