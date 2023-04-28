@@ -1,0 +1,9 @@
+{
+  "version": "1.0.0",
+  "name": "asp.net",
+  "private": true,
+  "devDependencies": {
+    "jquery": "3.6.4",
+    "crypto-js": "4.1.1"
+  }
+}

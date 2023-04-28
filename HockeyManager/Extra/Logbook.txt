@@ -50,3 +50,7 @@
 	{
 	login and stuff 
 	}
+2023-04-28
+	{
+	login kind of works, encryption and remember me works but not the login feture itself 
+	}
