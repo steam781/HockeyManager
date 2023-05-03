@@ -25,7 +25,7 @@ namespace HockeyManager.Models
         {
             string conStr = "server=46.246.45.183;user=OliverEc;port=3306;database=HockeyManager_OE;password=YROSBKEE";
 
-            List<Player> list = new List<Player>();
+            List<Player> Players = new List<Player>();
             MySqlConnection conn = new MySqlConnection(conStr);
             MySqlCommand MyCom = new MySqlCommand("SELECT * FROM `Player` WHERE `TeamID` = 0", conn);
 
@@ -49,20 +49,20 @@ namespace HockeyManager.Models
                 p.shots = reader.GetInt32("shots");
                 p.shotsagainst = reader.GetInt32("shotsagainst");
                 p.saves = reader.GetInt32("saves");
-                list.Add(p);
+                Players.Add(p);
             }
 
             MyCom.Dispose();
             conn.Close();
 
-            return list;
+            return Players;
         }
 
         public static List<Player> getAllOwnedPlayers(int teamID)
         {
             string conStr = "server=46.246.45.183;user=OliverEc;port=3306;database=HockeyManager_OE;password=YROSBKEE";
 
-            List<Player> players = new List<Player>();
+            List<Player> Players = new List<Player>();
             MySqlConnection conn = new MySqlConnection(conStr);
             MySqlCommand MyCom = new MySqlCommand("SELECT * FROM `Player` WHERE `TeamID` = @teamID", conn);
             MyCom.Parameters.AddWithValue("@teamID", teamID);
@@ -87,13 +87,13 @@ namespace HockeyManager.Models
                 p.shots = reader.GetInt32("shots");
                 p.shotsagainst = reader.GetInt32("shotsagainst");
                 p.saves = reader.GetInt32("saves");
-                players.Add(p);
+                Players.Add(p);
             }
 
             MyCom.Dispose();
             conn.Close();
 
-            return players;
+            return Players;
         }
 
         public static Player getSinglePlayerById(int id)
@@ -133,7 +133,7 @@ namespace HockeyManager.Models
             return singleP;
         }
 
-        public static bool sparaPlayer(Player p)
+        public static bool savePlayer(Player p)
         {
 
             string conStr = "server=46.246.45.183;user=OliverEc;port=3306;database=HockeyManager_OE;password=YROSBKEE";
@@ -164,7 +164,7 @@ namespace HockeyManager.Models
 
 
         }
-        public static bool sparanyPlayer(Player p)
+        public static bool savenewPlayer(Player p)
         {
 
             string conStr = "server=46.246.45.183;user=OliverEc;port=3306;database=HockeyManager_OE;password=YROSBKEE";

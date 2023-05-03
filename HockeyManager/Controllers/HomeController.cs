@@ -21,6 +21,7 @@ namespace HockeyManager.Controllers
         [HttpPost]
         public IActionResult Login(User usr)
         {
+            
             ModelState.Remove("TeamID");
             ModelState.Remove("Role");
 

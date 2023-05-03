@@ -1,4 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
+using static Google.Protobuf.WellKnownTypes.Field.Types;
+using HockeyManager.Models;
+using System.Collections.Generic;
 
 namespace HockeyManager.Controllers
 {
@@ -8,10 +12,11 @@ namespace HockeyManager.Controllers
         {
             return View();
         }
-        public IActionResult Team()
+        public IActionResult MyTeam(User usr, MyTeam team)
         {
+            List<MyTeam> TeamInfo = Models.MyTeam.GetTeamInfo(usr.TeamID);
 
-            return View();
+            return View(TeamInfo);
         }
         public IActionResult Player()
         {

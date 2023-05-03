@@ -11,7 +11,6 @@ namespace HockeyManager.Models
     {
         public int ID { get; set; } = 0;
         public int TeamID { get; set; } = 0;
-        private string SecurityKey { get; set; } = "";
         public string Role { get; set; } = "";
 
         [Required(ErrorMessage = "Ange valid mailadress")]

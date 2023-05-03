@@ -1,14 +1,14 @@
-﻿@*<style>
+﻿<style>
     td {
         border: solid 1px black;
         padding: 10px;
     }
 </style>
-@model List<Team>
-<a class="nav-link" asp-area="" asp-controller="Produkt" asp-action="newProdukt">läg till Produkt</a>
-<div id="ProduktList">
+@model List<Players>
+<div id="List">
     @{
         <h1>@ViewBag.Meddelande</h1>
+        <h1>@Team.Name</h1>
         <table>
             <tr>
                 <td>Name:</td>
@@ -19,7 +19,7 @@
                 <td></td>
             </tr>
 
-            @foreach (Player P in playerList)
+            @foreach (Player P in Model.Players.Where(p => p.TeamId == TeamId))
             {
 
                 <tr>
@@ -46,4 +46,4 @@
             }
         </table>
     }
-</div>*@
+</div>

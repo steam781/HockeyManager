@@ -54,3 +54,7 @@
 	{
 	login kind of works, encryption and remember me works but not the login feture itself 
 	}
+2023-05-03
+	{
+	login still a problem and so is sql
+	}
