@@ -8,6 +8,7 @@ namespace HockeyManager.Models
     public class Player
     {
         public int teamID { get; set; } = 0;
+        public string teamname { get; set; } = "";
         public int number { get; set; } = 0;
         public string firstname { get; set; } = "";
         public string lastname { get; set; } = "";
@@ -21,6 +22,15 @@ namespace HockeyManager.Models
         public int saves { get; set; } = 0;
         public int ID { get; set; } = 0;
 
+    }
+    public class TeamPlayers
+    {
+        public List<Player> Players { get; set; }
+        public string teamname { get; set; } = "";
+    }
+
+    public static class PlayerManager
+    {
         public static List<Player> getAllUnownedPlayers()
         {
             string conStr = "server=46.246.45.183;user=OliverEc;port=3306;database=HockeyManager_OE;password=YROSBKEE";
@@ -58,43 +68,59 @@ namespace HockeyManager.Models
             return Players;
         }
 
-        public static List<Player> getAllOwnedPlayers(int teamID)
+        public static TeamPlayers getAllOwnedPlayers(int teamID)
         {
             string conStr = "server=46.246.45.183;user=OliverEc;port=3306;database=HockeyManager_OE;password=YROSBKEE";
 
+            string teamname = "";
             List<Player> Players = new List<Player>();
-            MySqlConnection conn = new MySqlConnection(conStr);
-            MySqlCommand MyCom = new MySqlCommand("SELECT * FROM `Player` WHERE `TeamID` = @teamID", conn);
-            MyCom.Parameters.AddWithValue("@teamID", teamID);
 
-            conn.Open();
-
-            MySqlDataReader reader = MyCom.ExecuteReader();
-
-            while (reader.Read())
+            using (MySqlConnection conn = new MySqlConnection(conStr))
             {
-                Player p = new Player();
-                p.ID = reader.GetInt32("ID");
-                p.teamID = reader.GetInt32("teamID");
-                p.number = reader.GetInt32("number");
-                p.firstname = reader.GetString("firstname");
-                p.lastname = reader.GetString("lastname");
-                p.role = reader.GetString("role");
-                p.power = reader.GetInt32("power");
-                p.price = reader.GetInt32("price");
-                p.gamesplayed = reader.GetInt32("gamesplayed");
-                p.goals = reader.GetInt32("goals");
-                p.shots = reader.GetInt32("shots");
-                p.shotsagainst = reader.GetInt32("shotsagainst");
-                p.saves = reader.GetInt32("saves");
-                Players.Add(p);
+                conn.Open();
+
+                MySqlCommand playerCmd = new MySqlCommand("SELECT * FROM `Player` LEFT JOIN Team ON Player.TeamID = Team.TeamID WHERE Team.TeamID = @teamID", conn);
+                playerCmd.Parameters.AddWithValue("@teamID", teamID);
+
+                MySqlDataReader reader = playerCmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    Player p = new Player();
+                    p.ID = reader.GetInt32("ID");
+                    p.teamID = reader.GetInt32("teamID");
+                    p.number = reader.GetInt32("number");
+                    p.firstname = reader.GetString("firstname");
+                    p.lastname = reader.GetString("lastname");
+                    p.role = reader.GetString("role");
+                    p.power = reader.GetInt32("power");
+                    p.price = reader.GetInt32("price");
+                    p.gamesplayed = reader.GetInt32("gamesplayed");
+                    p.goals = reader.GetInt32("goals");
+                    p.shots = reader.GetInt32("shots");
+                    p.shotsagainst = reader.GetInt32("shotsagainst");
+                    p.saves = reader.GetInt32("saves");
+                    Players.Add(p);
+                }
+                reader.Close();
+
+                MySqlCommand teamCmd = new MySqlCommand("SELECT `name` FROM `Team` WHERE `TeamID` = @teamID", conn);
+                teamCmd.Parameters.AddWithValue("@teamID", teamID);
+
+                reader = teamCmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    teamname = reader.GetString("name");
+                }
+                reader.Close();
+
+                playerCmd.Dispose();
+                teamCmd.Dispose();
+                conn.Close();
             }
 
-            MyCom.Dispose();
-            conn.Close();
-
-            return Players;
+            return new TeamPlayers { Players = Players, teamname = teamname };
         }
+
 
         public static Player getSinglePlayerById(int id)
         {

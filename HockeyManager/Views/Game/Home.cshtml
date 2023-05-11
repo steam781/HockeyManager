@@ -12,8 +12,6 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="stylesheet" href="style.css" />
-
     <title>Document</title>
 
 </head>
@@ -22,64 +20,22 @@
     <script>
         const encryptedMail = localStorage.getItem('Email');
         const encryptedPass = localStorage.getItem('Password');
-        console.log(encryptedMail + ", " + encryptedPass)
+        console.log(encryptedMail + ", " + encryptedPass);
+        console.log()
     </script>
-    <nav class="navbar">
+    @Html.Partial("NavPartial.cshtml")
+    @{
+        string name = "";
+        string role = "";
+        if (Context.Session.GetString("name") != null)
+        {
+            name = Context.Session.GetString("name");
+            role = Context.Session.GetString("role");
+        }
 
-        <!-- LOGO -->
-
-        <div class="logo">MUO</div>
-
-        <!-- NAVIGATION MENU -->
-
-        <ul class="nav-links">
-
-            <!-- USING CHECKBOX HACK -->
-
-            <input type="checkbox" id="checkbox_toggle" />
-
-            <label for="checkbox_toggle" class="hamburger">&#9776;</label>
-
-            <!-- NAVIGATION MENUS -->
-
-            <div class="menu">
-
-            <li><a href="/">Home</a></li>
-
-            <li><a href="/">About</a></li>
-
-            <li class="services">
-
-                <a href="/">Services</a>
-
-                <!-- DROPDOWN MENU -->
-
-                <ul class="dropdown">
-
-                    <li><a href="/">Dropdown 1 </a></li>
-
-                    <li><a href="/">Dropdown 2</a></li>
-
-                    <li><a href="/">Dropdown 2</a></li>
-
-                    <li><a href="/">Dropdown 3</a></li>
-
-                    <li><a href="/">Dropdown 4</a></li>
-
-                </ul>
-
-            </li>
-
-            <li><a href="/">Pricing</a></li>
-
-            <li><a href="/">Contact</a></li>
-
-            </div>
-
-        </ul>
-
-    </nav>
-
+        <h1 class="display-4">Welcome, @name!</h1>
+        <p>You are logged in as a @role.</p>
+    }
+    <script src="~/js/inside.js"></script>
 </body>
-
 </html>

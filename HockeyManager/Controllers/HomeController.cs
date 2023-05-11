@@ -41,6 +41,8 @@ namespace HockeyManager.Controllers
             HttpContext.Session.SetInt32("teamID", newUser.TeamID);
             HttpContext.Session.SetString("role", newUser.Role);
 
+            Console.Write(newUser);
+
             return RedirectToAction("Home", "Game");
         }
 

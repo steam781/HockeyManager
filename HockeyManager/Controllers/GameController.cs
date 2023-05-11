@@ -3,6 +3,7 @@ using System.Globalization;
 using static Google.Protobuf.WellKnownTypes.Field.Types;
 using HockeyManager.Models;
 using System.Collections.Generic;
+using static HockeyManager.Models.Player;
 
 namespace HockeyManager.Controllers
 {
@@ -12,11 +13,17 @@ namespace HockeyManager.Controllers
         {
             return View();
         }
-        public IActionResult MyTeam(User usr, MyTeam team)
+        public IActionResult MyTeam()
         {
-            List<MyTeam> TeamInfo = Models.MyTeam.GetTeamInfo(usr.TeamID);
+            int? teamID = HttpContext.Session.GetInt32("teamID");
+            if (!teamID.HasValue)
+            {
+                // handle case where team ID is not set in session
+            }
 
-            return View(TeamInfo);
+            TeamPlayers teamPlayers = Models.PlayerManager.getAllOwnedPlayers(teamID.Value);
+
+            return View(teamPlayers);
         }
         public IActionResult Player()
         {

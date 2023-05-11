@@ -1,14 +1,16 @@
-﻿<style>
+﻿@model HockeyManager.Models.TeamPlayers
+<link rel="stylesheet" type="text/css" href="~/css/Inside.css">
+<style>
     td {
         border: solid 1px black;
         padding: 10px;
     }
 </style>
-@model List<Players>
+@Html.Partial("NavPartial.cshtml")
 <div id="List">
     @{
         <h1>@ViewBag.Meddelande</h1>
-        <h1>@Team.Name</h1>
+        <h1>@Model.teamname</h1>
         <table>
             <tr>
                 <td>Name:</td>
@@ -16,34 +18,19 @@
                 <td>Role:</td>
                 <td>Power:</td>
                 <td>ID:</td>
-                <td></td>
             </tr>
 
-            @foreach (Player P in Model.Players.Where(p => p.TeamId == TeamId))
+            @foreach (var p in Model.Players)
             {
-
-                <tr>
-                    <td>
-                        @P.firstname @P.lastname
-                    </td>
-                    <td>
-                        @P.number
-                    </td>
-                    <td>
-                        @P.role
-                    </td>
-                    <td>
-                        @P.power
-                    </td>
-                    <td>
-                        @P.ID
-                    </td>
-                    <td>
-                        @Html.ActionLink("Edit", "addRoster", "Team", new {id = @P.id})
-                    </td>
-                </tr>
-
+                    <tr>
+                        <td>@p.firstname @p.lastname</td>
+                        <td>@p.number</td>
+                        <td>@p.role</td>
+                        <td>@p.power</td>
+                        <td>@p.ID</td>
+                    </tr>
             }
         </table>
     }
 </div>
+<script src="~/js/inside.js"></script>
