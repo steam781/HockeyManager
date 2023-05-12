@@ -1,0 +1,78 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!--important to transfer to other sites-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!--important to transfer to other sites-->
+    <title>Hockey Manager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&family=Rubik:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/site.css">
+    <link rel="stylesheet" href="~/css/Outside.css">
+    <link rel="stylesheet" href="~/css/GridEffect.css">
+    
+</head>
+<body>
+    <!-- partial:index.partial.html -->
+
+    <h1 id="title" class="centered">
+        Hockey Manager
+        <span class="fancy">2023</span>
+    </h1>
+
+    <div id="iconbox" class="centered">
+        <i id="icon" class="fa-solid fa-hockey-stick-puck"></i>
+        <i id="icon" class="fa-solid fa-goal-net"></i>
+    </div>
+
+    <div id="login" class="centerdContent">
+        <div>
+            <div>
+                <form asp-action="Login" method="post" id="form">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    @if (ViewBag.LoginError != null)
+                    {
+                        <div>
+                            <span>
+                                Mail eller lösenord är felkatig!
+                            </span>
+                        </div>
+                    }
+                    <div>
+                        <label for="mailadress">Email address</label>
+                        <input type="email" id="Email" name="Email" placeholder="blind@gmail.com" required value="rick.eckerstrom@gmail.com"/>
+                    </div>
+                    <div>
+                        <label for="password">Password</label>
+                        <input type="password" id="Password" name="Password" placeholder="********" required value="Oliver04"/>
+                        @ViewBag.MeddelandePass
+                    </div>
+                    <button type="submit" id="submit" class="Action-button">Register</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <a id="rule-link" class="meta-link" asp-area="" asp-controller="Home" asp-action="Rules">
+  <i class="fa-solid fa-book"></i>
+  <span>Rules</span>
+</a>
+
+<a id="about-link" class="meta-link" asp-area="" asp-controller="Home" asp-action="About">
+  <i class="fa-solid fa-question"></i>
+  <span>About</span>
+</a>
+
+    <!-- partial -->
+    <script src='https://codepen.io/Hyperplexed/pen/xxYJYjM/54407644e24173ad6019b766443bf2a6.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js'></script>
+    <script src="~/js/GridEffect.js"></script>
+    @*<script type="module" src="~/js/HMcrypto.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>*@
+
+
+</body>
+</html>

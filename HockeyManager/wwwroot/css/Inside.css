@@ -1,4 +1,28 @@
 /*---------------------------common---------------------------*/
+body, html{
+    margin:0px;
+    height:100%;
+    color:white;
+}
+body{
+    background-color:black;
+}
+container {
+    height:100%;
+    grid-gap: 3rem;
+    display: grid;
+    gap: 2rem;
+    grid-template-areas: "nav content";
+    grid-template-columns: 290px auto;
+}
+content {
+    background-color: rgba(34, 42, 53, 0.8);
+    border: 1px solid;
+    border-color: rgb(40, 40, 40);
+    border-radius:5px;
+    margin:10px;
+    padding:10px;
+}
 .size1{
     font-size: 24px;
 }
@@ -10,17 +34,15 @@ size3{
 }
 /*---------------------------navbar---------------------------*/
 nav {
-    display: flex;
-    justify-content: space-between;
-    flex-direction:column;
     padding: 20px;
-    background-color: black;
     color: #fff;
-    position: fixed;
+    position: -webkit-sticky;
+    position: sticky;
+    z-index: var(--z-index-top);
     top: 0;
     left: 0;
     height: calc(100% - 40px);
-    width:250px;
+    width: 250px;
 }
 
 .logo {
@@ -59,8 +81,8 @@ li {
 }
 
 a {
-    color: #fff;
     text-decoration: none;
+    color:white;
 }
 
 .burger {

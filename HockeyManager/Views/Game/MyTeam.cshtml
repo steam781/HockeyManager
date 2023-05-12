@@ -1,36 +1,32 @@
 ﻿@model HockeyManager.Models.TeamPlayers
 <link rel="stylesheet" type="text/css" href="~/css/Inside.css">
-<style>
-    td {
-        border: solid 1px black;
-        padding: 10px;
-    }
-</style>
-@Html.Partial("NavPartial.cshtml")
-<div id="List">
-    @{
-        <h1>@ViewBag.Meddelande</h1>
-        <h1>@Model.teamname</h1>
-        <table>
-            <tr>
-                <td>Name:</td>
-                <td>Number:</td>
-                <td>Role:</td>
-                <td>Power:</td>
-                <td>ID:</td>
-            </tr>
+<container>
+    @Html.Partial("NavPartial.cshtml")
+    <content>
+        @{
+            <h1>@ViewBag.Meddelande</h1>
+            <h1>@Model.teamname</h1>
+            <table>
+                <tr>
+                    <td>Name:</td>
+                    <td>Number:</td>
+                    <td>Role:</td>
+                    <td>Power:</td>
+                    <td>ID:</td>
+                </tr>
 
-            @foreach (var p in Model.Players)
-            {
-                    <tr>
-                        <td>@p.firstname @p.lastname</td>
-                        <td>@p.number</td>
-                        <td>@p.role</td>
-                        <td>@p.power</td>
-                        <td>@p.ID</td>
-                    </tr>
-            }
-        </table>
-    }
-</div>
+                @foreach (var p in Model.Players)
+                {
+                        <tr>
+                            <td>@p.firstname @p.lastname</td>
+                            <td>@p.number</td>
+                            <td>@p.role</td>
+                            <td>@p.power</td>
+                            <td>@p.ID</td>
+                        </tr>
+                }
+            </table>
+        }
+    </content>
+</container>
 <script src="~/js/inside.js"></script>

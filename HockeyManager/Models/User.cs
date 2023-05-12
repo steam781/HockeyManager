@@ -23,7 +23,7 @@ namespace HockeyManager.Models
         [Required(ErrorMessage = "Ange lösenord")]
         [Display(Name = "Ditt lösenord")]
         public string Password { get; set; } = "";
-        public string Currency { get; set; } = "";
+        public int Currency { get; set; } = 0;
 
         public static User GetUserByMail(string mail)
         {
@@ -42,7 +42,7 @@ namespace HockeyManager.Models
                 singleE.Email = reader.GetString("Email");
                 singleE.Username = reader.GetString("Username");
                 singleE.Password = reader.GetString("Password");
-                singleE.Currency = reader.GetString("Currency");
+                singleE.Currency = reader.GetInt32("Currency");
             }
             else
             {

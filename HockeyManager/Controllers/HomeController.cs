@@ -24,6 +24,7 @@ namespace HockeyManager.Controllers
             
             ModelState.Remove("TeamID");
             ModelState.Remove("Role");
+            ModelState.Remove("Currency");
 
             if (!ModelState.IsValid) return View("index");
 
@@ -40,10 +41,16 @@ namespace HockeyManager.Controllers
             HttpContext.Session.SetInt32("id", newUser.ID);
             HttpContext.Session.SetInt32("teamID", newUser.TeamID);
             HttpContext.Session.SetString("role", newUser.Role);
+            HttpContext.Session.SetInt32("currency", newUser.Currency);
 
             Console.Write(newUser);
 
             return RedirectToAction("Home", "Game");
+        }
+
+        public IActionResult Register()
+        {
+            return View();
         }
 
         public IActionResult Rules()
