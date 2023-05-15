@@ -106,7 +106,12 @@ body {
     z-index: 2;
     opacity: 0;
     width: 350px;
-    height: 100px;
+    height: 300px;
+}
+#Register {
+    z-index: 10;
+    width: 350px;
+    height: 300px;
 }
 
 #icon {

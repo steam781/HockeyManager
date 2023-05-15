@@ -19,45 +19,38 @@
 <body>
     <!-- partial:index.partial.html -->
 
-    <h1 id="title" class="centered">
-        Hockey Manager
-        <span class="fancy">2023</span>
-    </h1>
-
     <div id="iconbox" class="centered">
         <i id="icon" class="fa-solid fa-hockey-stick-puck"></i>
         <i id="icon" class="fa-solid fa-goal-net"></i>
     </div>
 
-    <div id="login" class="centerdContent">
+    <div id="Register" class="centerdContent">
         <div>
-            <div>
-                <form asp-action="Login" method="post" id="form">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    @if (ViewBag.LoginError != null)
-                    {
-                        <div>
-                            <span>
-                                Mail eller lösenord är felkatig!
-                            </span>
-                        </div>
-                    }
+            <form asp-action="RegisterOperation" method="post" id="form">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                @if (ViewBag.LoginError != null)
+                {
                     <div>
-                        <label for="mailadress">Email address</label>
-                        <input type="email" id="Email" name="Email" placeholder="blind@gmail.com" required"/>
+                        <span>
+                            Mail eller lösenord är felkatig!
+                        </span>
                     </div>
-                    <div>
-                        <label for="username">Username</label>
-                        <input type="text" id="username" name="username" placeholder="Blind64" required" />
-                    </div>
-                    <div>
-                        <label for="password">Password</label>
-                        <input type="password" id="Password" name="Password" placeholder="********" required/>
-                        @ViewBag.MeddelandePass
-                    </div>
-                    <button type="submit" id="submit" class="Action-button">Register</button>
-                </form>
-            </div>
+                }
+                <div>
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="Blind64" required" />
+                </div>
+                <div>
+                    <label for="mailadress">Email address</label>
+                    <input type="email" id="Email" name="Email" placeholder="blind@gmail.com" required"/>
+                </div>
+                <div>
+                    <label for="password">Password</label>
+                    <input type="password" id="Password" name="Password" placeholder="********" required/>
+                    @ViewBag.MeddelandePass
+                </div>
+                <button type="submit" id="submit" class="Action-button">Register</button>
+            </form>
         </div>
     </div>
     <a id="rule-link" class="meta-link" asp-area="" asp-controller="Home" asp-action="Rules">

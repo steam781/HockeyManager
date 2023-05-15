@@ -1,5 +1,6 @@
 ﻿using HockeyManager.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using System.Diagnostics;
 using static HockeyManager.Models.User;
 
@@ -16,11 +17,12 @@ namespace HockeyManager.Controllers
 
         public IActionResult Index()
         {
+
             return View();
         }
 
         [HttpPost]
-        public IActionResult Login(User usr)
+        public IActionResult Login(User usr, bool RememberMe)
         {
             
             ModelState.Remove("TeamID");
@@ -33,9 +35,9 @@ namespace HockeyManager.Controllers
            
 
             // Check if password is correct
-            if (newUser.Password != usr.Password)
+            if (newUser.Password != usr.Password || newUser.Email != usr.Email)
             {
-                ViewBag.MeddelandePass = "Incorrect password";
+                ViewBag.MeddelandePass = "Incorrect mail or password";
                 return View("Index");
             }
 
@@ -49,16 +51,22 @@ namespace HockeyManager.Controllers
             return RedirectToAction("Home", "Game");
         }
 
-        public IActionResult Register(User u)
+        public IActionResult Register(User u, MyTeam t)
         {
-            if (HockeyManager.Models.User.Register(u) == true)
+            if (HockeyManager.Models.User.Register(u, t) == true)
             {
-                ViewBag.Meddelande = "new product saved";
+                ViewBag.Message = "new user saved";
+                return View("Index");
             }
-            else
+            else if (HockeyManager.Models.User.Register(u, t) == false)
             {
-                ViewBag.Meddelande = "Action failed";
+                ViewBag.Message = "Action failed";
             }
+            return View();
+        }
+        public IActionResult logout()
+        {
+            HttpContext.Session.Clear();
             return View("Index");
         }
 

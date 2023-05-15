@@ -53,8 +53,16 @@ namespace HockeyManager.Models
             conn.Close();
             return singleE;
         }
-        public static bool Register(User u)
+        public static bool Register(User u, MyTeam t)
         {
+            User newUser = HockeyManager.Models.User.GetUserByMail(u.Email);
+
+
+            // Check if user already exists
+            if (newUser.Email == u.Email)
+            {
+                return false;
+            }
             string conStr = "server=46.246.45.183;user=OliverEc;port=3306;database=HockeyManager_OE;password=YROSBKEE";
             using (MySqlConnection conn = new MySqlConnection(conStr))
             {
@@ -62,22 +70,24 @@ namespace HockeyManager.Models
 
                 MySqlCommand UserCmd = new MySqlCommand("INSERT INTO User(Email, Username, Password) VALUES (@MAIL, @USER, @PASS)", conn);
 
-                MySqlDataReader reader = UserCmd.ExecuteReader();
-
                 UserCmd.Parameters.AddWithValue("@MAIL", u.Email);
                 UserCmd.Parameters.AddWithValue("@USER", u.Username);
                 UserCmd.Parameters.AddWithValue("@PASS", u.Password);
 
-                int rader = UserCmd.ExecuteNonQuery();
-
-                MySqlCommand TeamCmd = new MySqlCommand("INSERT INTO Team(Email, Username, Password) VALUES (@MAIL, @USER, @PASS)", conn);
-
-                TeamCmd.Parameters.AddWithValue("@TID", T)
-                
-                reader = TeamCmd.ExecuteReader();
+                int rowsAffected = UserCmd.ExecuteNonQuery();
 
                 UserCmd.Dispose();
+
+                MySqlCommand TeamCmd = new MySqlCommand("INSERT INTO Team(OwnerID, Name) VALUES (@OID, @NAME)", conn);
+
+                TeamCmd.Parameters.AddWithValue("@OID", u.ID);
+                TeamCmd.Parameters.AddWithValue("@NAME", u.Username + "'s Team");
+
+                rowsAffected = TeamCmd.ExecuteNonQuery();
+
+                TeamCmd.Dispose();
                 conn.Close();
+
                 return true;
             }
         }

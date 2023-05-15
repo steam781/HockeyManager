@@ -1,3 +1,8 @@
+* {
+    text-decoration: none;
+    list-style-type: none;
+}
+
 html {
   font-size: 14px;
 }
@@ -15,6 +20,28 @@ html {
 
 body {
   margin-bottom: 60px;
+}
+
+.size1 {
+    font-size: 24px;
+}
+
+.size2 {
+    font-size: 18px;
+}
+
+.size3 {
+    font-size:
+}
+
+.error {
+    color: red;
+    font-size:20px;
+    margin-bottom:10px;
+}
+
+.width-100{
+    width:100%;
 }
 
 .centered {
@@ -49,7 +76,7 @@ body {
     cursor: pointer;
 }
 
-input[type=email], input[type=password] {
+input[type=email], input[type=password], input[type=text]{
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;

@@ -27,8 +27,8 @@ namespace HockeyManager.Controllers
         }
         public IActionResult Player()
         {
-
-            return View(Player.getAllOwnedPlayers);
+            List<Player> players = Models.PlayerManager.getAllUnownedPlayers();
+            return View(players);
         }
         public IActionResult Market()
         {

@@ -11,20 +11,20 @@
 <nav class="nav">
     <div class="menu">
         <ul id="toplist">
-            <li class="size1"><a asp-area="" asp-controller="Game" asp-action="Home">Home</a></li>
+            <li class="size1"><i class="fa-solid fa-house" style="color: #ffffff;"></i><a asp-area="" asp-controller="Game" asp-action="Home">Home</a></li>
             <li><div class="spacer"></div></li>
-            <li class="size1"><a asp-area="" asp-controller="Game" asp-action="MyTeam">Team</a></li>
-            <li class="size1"><a asp-area="" asp-controller="Game" asp-action="Players">Players</a></li>
-            <li class="size1"><a asp-area="" asp-controller="Game" asp-action="Market">Market</a></li>
+            <li class="size1"><i class="fa-solid fa-people-group" style:"color: #ffffff;"></i><a asp-area="" asp-controller="Game" asp-action="MyTeam">Team</a></li>
+            <li class="size1"><i class="fa-solid fa-user-plus" style="color: #ffffff;"></i><a asp-area="" asp-controller="Game" asp-action="Player">Players</a></li>
+            <li class="size1"><i class="fa-solid fa-store" style:"color: #ffffff;"></i><a asp-area="" asp-controller="Game" asp-action="Market">Market</a></li>
             <li><div class="spacer"></div></li>
-            <li class="size1"><a asp-area="" asp-controller="Game" asp-action="Leaderboard">Leaderboard</a></li>
-            <li class="size1"><a asp-area="" asp-controller="Game" asp-action="Statistics">Statistics</a></li>
-            <li class="size1"><a asp-area="" asp-controller="Game" asp-action="History">History</a></li>
+            <li class="size1"><i class="fa-solid fa-medal" style:"color: #ffffff;"></i><a asp-area="" asp-controller="Game" asp-action="Leaderboard">Leaderboard</a></li>
+            <li class="size1"><i class="fa-solid fa-chart-pie" style:"color: #ffffff;"></i><a asp-area="" asp-controller="Game" asp-action="Statistics">Statistics</a></li>
+            <li class="size1"><i class="fa-solid fa-clock" style:"color: #ffffff;"></i><a asp-area="" asp-controller="Game" asp-action="History">History</a></li>
         </ul>
         <ul id="bottomlist">
-            <li class="size1">Money:@currency$</li>
+            <li class="size1">Money: @currency$</li>
             <li><div class="spacer"></div></li>
-            <li class="size1"><a>Logout</a></li>
+            <li class="size1"><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">Logout</a></li>
         </ul>
     </div>
     <div class="burger">
@@ -32,5 +32,10 @@
         <div class="line"></div>
         <div class="line"></div>
     </div>
+    <div class="nav-top-middle size2">
+        Money: @currency$
+    </div>
+    <div class="nav-top-right">
+        <a class="size2" asp-area="" asp-controller="Home" asp-action="Logout">Logout</a></li>
+    </div>
 </nav>
-<script src="~/js/inside.js"></script>

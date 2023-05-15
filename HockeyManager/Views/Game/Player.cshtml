@@ -1,32 +1,36 @@
-﻿@model List<Produkt>
+﻿@model List<Player>
 <link rel="stylesheet" type="text/css" href="~/css/Inside.css">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="~/css/Inside.css">
+</head>
 <container>
-    @Html.Partial("NavPartial.cshtml")
+    <div class="nav-box">
+        @Html.Partial("NavPartial.cshtml")
+    </div>
     <content>
-        @{
-            <h1>@ViewBag.Meddelande</h1>
-            <h1>@Model.teamname</h1>
-            <table>
+        <h1>@ViewBag.Meddelande</h1>
+        <table id="playerTable"> 
+            <tr>
+                <td><a href="#" onclick="sortTable('name')">Name</a></td>
+                <td><a href="#" onclick="sortTable('number')">Number</a></td>
+                <td><a href="#" onclick="sortTable('role')">Role</a></td>
+                <td><a href="#" onclick="sortTable('power')">Power</a></td>
+                <td><a href="#" onclick="sortTable('cost')">Cost</a></td>
+            </tr>
+            @foreach (var p in Model)
+            {
                 <tr>
-                    <td>Name:</td>
-                    <td>Number:</td>
-                    <td>Role:</td>
-                    <td>Power:</td>
-                    <td>ID:</td>
+                    <td>@p.firstname @p.lastname</td>
+                    <td>@p.number</td>
+                    <td>@p.role</td>
+                    <td>@p.power</td>
+                    <td>@p.price</td>
                 </tr>
-
-                @foreach (var p in Model.Players)
-                {
-                    <tr>
-                        <td>@p.firstname @p.lastname</td>
-                        <td>@p.number</td>
-                        <td>@p.role</td>
-                        <td>@p.power</td>
-                        <td>@p.ID</td>
-                    </tr>
-                }
-            </table>
-        }
+            }
+        </table>
+        <div id="pagination"></div>
     </content>
 </container>
 <script src="~/js/inside.js"></script>

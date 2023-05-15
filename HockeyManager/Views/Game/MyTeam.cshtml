@@ -1,7 +1,11 @@
 ﻿@model HockeyManager.Models.TeamPlayers
 <link rel="stylesheet" type="text/css" href="~/css/Inside.css">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!--important to transfer to other sites-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!--important to transfer to other sites-->
+</head>
 <container>
-    @Html.Partial("NavPartial.cshtml")
+    <div class="nav-box">@Html.Partial("NavPartial.cshtml")</div>
     <content>
         @{
             <h1>@ViewBag.Meddelande</h1>
