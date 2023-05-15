@@ -1,53 +1,32 @@
-﻿@*<style>
-    td {
-        border: solid 1px black;
-        padding: 10px;
-    }
-</style>
-@model List<Produkt>
-<a class="nav-link" asp-area="" asp-controller="Produkt" asp-action="newProdukt">läg till Produkt</a>
-<div id="ProduktList">
-    @{
-        <h1>@ViewBag.Meddelande</h1>
-        <table>
-            <tr>
-                <td>Name:</td>
-                <td>Info:</td>
-                <td>Stock:</td>
-                <td>price:</td>
-                <td>id:</td>
-                <td></td>
-                <td></td>
-            </tr>
-
-            @foreach (Produkt P in Model)
-            {
-
+﻿@model List<Produkt>
+<link rel="stylesheet" type="text/css" href="~/css/Inside.css">
+<container>
+    @Html.Partial("NavPartial.cshtml")
+    <content>
+        @{
+            <h1>@ViewBag.Meddelande</h1>
+            <h1>@Model.teamname</h1>
+            <table>
                 <tr>
-                    <td>
-                        @P.produktnamn
-                    </td>
-                    <td>
-                        @P.produktinfo (@P.tillverkare)
-                    </td>
-                    <td>
-                        @P.stock
-                    </td>
-                    <td>
-                        @P.pris
-                    </td>
-                    <td>
-                        @P.id
-                    </td>
-                    <td>
-                        @Html.ActionLink("Edit", "redigeraProdukt", "Produkt", new {id = @P.id})
-                    </td>
-                    <td>
-                        @Html.ActionLink("Delete", "deleteProdukt", "Produkt", new {id = @P.id}, new { onclick = "return confirm('Are you sure you want to delete?');" })
-                    </td>
+                    <td>Name:</td>
+                    <td>Number:</td>
+                    <td>Role:</td>
+                    <td>Power:</td>
+                    <td>ID:</td>
                 </tr>
 
-            }
-        </table>
-    }
-</div>*@
+                @foreach (var p in Model.Players)
+                {
+                    <tr>
+                        <td>@p.firstname @p.lastname</td>
+                        <td>@p.number</td>
+                        <td>@p.role</td>
+                        <td>@p.power</td>
+                        <td>@p.ID</td>
+                    </tr>
+                }
+            </table>
+        }
+    </content>
+</container>
+<script src="~/js/inside.js"></script>

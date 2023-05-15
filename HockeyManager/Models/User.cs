@@ -53,5 +53,33 @@ namespace HockeyManager.Models
             conn.Close();
             return singleE;
         }
+        public static bool Register(User u)
+        {
+            string conStr = "server=46.246.45.183;user=OliverEc;port=3306;database=HockeyManager_OE;password=YROSBKEE";
+            using (MySqlConnection conn = new MySqlConnection(conStr))
+            {
+                conn.Open();
+
+                MySqlCommand UserCmd = new MySqlCommand("INSERT INTO User(Email, Username, Password) VALUES (@MAIL, @USER, @PASS)", conn);
+
+                MySqlDataReader reader = UserCmd.ExecuteReader();
+
+                UserCmd.Parameters.AddWithValue("@MAIL", u.Email);
+                UserCmd.Parameters.AddWithValue("@USER", u.Username);
+                UserCmd.Parameters.AddWithValue("@PASS", u.Password);
+
+                int rader = UserCmd.ExecuteNonQuery();
+
+                MySqlCommand TeamCmd = new MySqlCommand("INSERT INTO Team(Email, Username, Password) VALUES (@MAIL, @USER, @PASS)", conn);
+
+                TeamCmd.Parameters.AddWithValue("@TID", T)
+                
+                reader = TeamCmd.ExecuteReader();
+
+                UserCmd.Dispose();
+                conn.Close();
+                return true;
+            }
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using HockeyManager.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using static HockeyManager.Models.User;
 
 namespace HockeyManager.Controllers
 {
@@ -48,9 +49,17 @@ namespace HockeyManager.Controllers
             return RedirectToAction("Home", "Game");
         }
 
-        public IActionResult Register()
+        public IActionResult Register(User u)
         {
-            return View();
+            if (HockeyManager.Models.User.Register(u) == true)
+            {
+                ViewBag.Meddelande = "new product saved";
+            }
+            else
+            {
+                ViewBag.Meddelande = "Action failed";
+            }
+            return View("Index");
         }
 
         public IActionResult Rules()

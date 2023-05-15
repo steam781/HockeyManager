@@ -27,7 +27,8 @@ namespace HockeyManager.Controllers
         }
         public IActionResult Player()
         {
-            return View();
+
+            return View(Player.getAllOwnedPlayers);
         }
         public IActionResult Market()
         {

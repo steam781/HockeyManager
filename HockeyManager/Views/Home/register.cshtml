@@ -44,11 +44,15 @@
                     }
                     <div>
                         <label for="mailadress">Email address</label>
-                        <input type="email" id="Email" name="Email" placeholder="blind@gmail.com" required value="rick.eckerstrom@gmail.com"/>
+                        <input type="email" id="Email" name="Email" placeholder="blind@gmail.com" required"/>
+                    </div>
+                    <div>
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" placeholder="Blind64" required" />
                     </div>
                     <div>
                         <label for="password">Password</label>
-                        <input type="password" id="Password" name="Password" placeholder="********" required value="Oliver04"/>
+                        <input type="password" id="Password" name="Password" placeholder="********" required/>
                         @ViewBag.MeddelandePass
                     </div>
                     <button type="submit" id="submit" class="Action-button">Register</button>
