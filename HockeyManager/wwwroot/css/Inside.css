@@ -28,6 +28,27 @@ content {
     position: sticky;
     bottom: 0;
 }
+.Important-message{
+    position:absolute;
+    top:0;
+    width:100%;
+}
+.split-grid{
+    display:grid;
+    grid-gap:20px;
+    grid-template-areas:"left-box right-box";
+    grid-template-columns:calc(50% - 10px);
+}
+.player-box {
+    width: 80%;
+    align-items: center;
+    height: 50px;
+    background-color: rgb(2, 43, 58);
+    margin-bottom: 2px;
+}
+.Player-table {
+    border-spacing:0px;
+}
 /*---------------------------navbar---------------------------*/
 nav {
     padding: 20px;
@@ -37,7 +58,7 @@ nav {
     z-index: var(--z-index-top);
     top: 0;
     left: 0;
-    height: calc(100vh - 40px);
+    height: calc(100vh - 120px);
     width: 100%;
 }
 
@@ -48,6 +69,7 @@ nav {
 
 .logo {
     font-size: 2rem;
+    height: 80px;
 }
 
 .menu {
@@ -131,6 +153,10 @@ a {
     
     .menu {
         display: none;
+    }
+
+    .logo {
+        display:none;
     }
 
     .nav-top-middle {

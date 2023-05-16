@@ -1,35 +1,36 @@
 ﻿@model HockeyManager.Models.TeamPlayers
-<link rel="stylesheet" type="text/css" href="~/css/Inside.css">
 <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!--important to transfer to other sites-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!--important to transfer to other sites-->
+
 </head>
 <container>
+    <div class="Important-message"><h1>@ViewBag.Meddelande</h1></div>
     <div class="nav-box">@Html.Partial("NavPartial.cshtml")</div>
-    <content>
+    <content class="split-grid">
         @{
-            <h1>@ViewBag.Meddelande</h1>
-            <h1>@Model.teamname</h1>
-            <table>
-                <tr>
-                    <td>Name:</td>
-                    <td>Number:</td>
-                    <td>Role:</td>
-                    <td>Power:</td>
-                    <td>ID:</td>
-                </tr>
+            <div class="left-box">
+                <h1>@Model.teamname</h1>
+                <table class="Player-table">
+                    <tr>
+                        <td>Number:</td>
+                        <td>Name:</td>
+                        <td>Role:</td>
+                        <td>Power:</td>
+                    </tr>
 
-                @foreach (var p in Model.Players)
-                {
-                        <tr>
-                            <td>@p.firstname @p.lastname</td>
-                            <td>@p.number</td>
-                            <td>@p.role</td>
-                            <td>@p.power</td>
-                            <td>@p.ID</td>
+                    @foreach (var p in Model.Players)
+                    {
+                        <tr class="player-box">
+                            <td class="center-text">@p.number</td>
+                            <td class="center-text">@p.firstname @p.lastname</td>
+                            <td class="center-text"> | @p.role | </td>
+                            <td class="center-text">@p.power</td>
                         </tr>
-                }
-            </table>
+                    }
+                </table>
+            </div>
+            <div class="right-box">
+                
+            </div>
         }
     </content>
 </container>

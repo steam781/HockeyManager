@@ -31,8 +31,16 @@ body {
 }
 
 .size3 {
-    font-size:
+    font-size:1px;
 }
+
+.center-text {
+    border: 5px solid;
+    display: flex;
+    justify-content: center;
+}
+
+
 
 .error {
     color: red;
