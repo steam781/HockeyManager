@@ -3,33 +3,56 @@
 
 </head>
 <container>
-    <div class="Important-message"><h1>@ViewBag.Meddelande</h1></div>
-    <div class="nav-box">@Html.Partial("NavPartial.cshtml")</div>
+    <div class="Important-message">
+        <h1>@ViewBag.Meddelande</h1>
+    </div>
+    <div class="nav-box">
+        @Html.Partial("NavPartial.cshtml")
+    </div>
     <content class="split-grid">
         @{
             <div class="left-box">
                 <h1>@Model.teamname</h1>
+                <label for="role-filter">Filter by Role:</label>
+                <select id="role-filter">
+                    <option value="">All Roles</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                    <option value="RW">RW</option>
+                    <option value="LW">LW</option>
+                    <option value="G">G</option>
+                </select>
                 <table class="Player-table">
-                    <tr>
-                        <td>Number:</td>
-                        <td>Name:</td>
-                        <td>Role:</td>
-                        <td>Power:</td>
+                    <tr class="player-box">
+                        <td class="number">Number:</td>
+                        <td class="center-text name">Name:</td>
+                        <td class="center-text line">|</td>
+                        <td class="center-text role">Role:</td>
+                        <td class="center-text line">|</td>
+                        <td class="center-text power">Pwr:</td>
                     </tr>
 
                     @foreach (var p in Model.Players)
                     {
-                        <tr class="player-box">
-                            <td class="center-text">@p.number</td>
-                            <td class="center-text">@p.firstname @p.lastname</td>
-                            <td class="center-text"> | @p.role | </td>
-                            <td class="center-text">@p.power</td>
+                        <tr class="player-box" data-role="@p.role">
+                            <td class="center-text number">@p.number</td>
+                            <td class="center-text name">
+                                <a href="/Player/Details/@p.ID">@p.firstname @p.lastname</a>
+                            </td>
+                            <td class="center-text line">|</td>
+                            <td class="center-text role">@p.role</td>
+                            <td class="center-text line">|</td>
+                            <td class="center-text power">@p.power</td>
                         </tr>
                     }
                 </table>
+                <div id="pagination"></div>
             </div>
             <div class="right-box">
-                
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
             </div>
         }
     </content>

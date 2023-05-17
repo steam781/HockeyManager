@@ -1,0 +1,31 @@
+﻿@model HockeyManager.Models.Player
+
+<div class="width-100 bg-dark-blue">
+    <h1>Selected Player</h1>
+</div>
+@if (Model != null)
+{
+    <div class="width-100 bg-dark-blue">
+        <h2>Number: @Model.number</h2>
+        <h2>@Model.firstname @Model.lastname</h2>
+        <div>
+            <h2>@Model.role</h2>
+            <h2>@Model.power</h2>
+        </div>
+    </div>
+    <div class="width-100 bg-dark-blue">
+        <h1>work in progress</h1>
+    </div>
+    <div class="width-100 bg-dark-blue">
+        @Html.ActionLink("Train player", "MyTeamPlayer", "Game", new { id = Model.ID }, null)
+        <div>
+            <h2>Value: @Model.price</h2>
+            @Html.ActionLink("Delete", "sellPlayer", "Player", new { id = Model.ID }, new { onclick = "return confirm('Are you sure you want to sell?');" })
+        </div>
+    </div>
+}
+else
+{
+    <h2>Player not found.</h2>
+}
+

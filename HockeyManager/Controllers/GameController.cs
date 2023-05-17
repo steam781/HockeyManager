@@ -15,6 +15,7 @@ namespace HockeyManager.Controllers
         }
         public IActionResult MyTeam()
         {
+
             int? teamID = HttpContext.Session.GetInt32("teamID");
             if (!teamID.HasValue)
             {
@@ -25,14 +26,72 @@ namespace HockeyManager.Controllers
 
             return View(teamPlayers);
         }
-        public IActionResult Player()
+        public IActionResult MyTeamPlayer(int id)
         {
-            List<Player> players = Models.PlayerManager.getAllUnownedPlayers();
-            return View(players);
+
+            Player p = PlayerManager.getSinglePlayerById(id);
+
+            return View(p);
         }
+        public IActionResult PlayerTrain(int id, Player p, int cost, int tempPower)
+        {
+            // Retrieve the user data from the session
+            int? userId = HttpContext.Session.GetInt32("id");
+            int? teamId = HttpContext.Session.GetInt32("teamID");
+            int? currency = HttpContext.Session.GetInt32("currency");
+
+            
+
+            // Create a new User object with the retrieved data
+            User u = new User
+            {
+                ID = userId ?? 0,
+                TeamID = teamId ?? 0,
+                Currency = currency ?? 0
+            };
+
+
+            // Calculate the updated currency and power values
+            int updatedCurrency = u.Currency - cost;
+            int updatedPower = p.power + tempPower;
+
+            // Update the player's power and user's currency in the database
+            PlayerManager.trainPlayer(p, updatedPower, u, updatedCurrency);
+
+            // Update the Players Session
+;
+            HttpContext.Session.SetInt32("currency", updatedCurrency);
+
+            return View("MyTeamPlayer", p);
+        }
+
+
+        public IActionResult Player(int playerId)
+        {
+
+            int? teamID = HttpContext.Session.GetInt32("teamID");
+            if (!teamID.HasValue)
+            {
+                // handle case where team ID is not set in session
+            }
+            TeamPlayers teamPlayers = Models.PlayerManager.getAllOwnedPlayers(teamID.Value);
+            playerId = 1;
+            ViewBag.SelectedPlayerId = playerId;
+
+            return View("Player", teamPlayers);
+        }
+        public IActionResult PlayerDetail(int id)
+        {
+            var player = PlayerManager.getSinglePlayerById(id);
+            ViewBag.SelectedPlayerId = id;
+            return PartialView("PlayerDetail", player);
+        }
+
         public IActionResult Market()
         {
-            return View();
+            List<Player> players = Models.PlayerManager.getAllUnownedPlayers();
+
+            return View(players);
         }
         public IActionResult Leaderboard()
         {

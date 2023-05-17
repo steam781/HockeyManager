@@ -40,15 +40,40 @@ content {
     grid-template-columns:calc(50% - 10px);
 }
 .player-box {
-    width: 80%;
+    width: 100%;
     align-items: center;
     height: 50px;
     background-color: rgb(2, 43, 58);
     margin-bottom: 2px;
+    display:flex;
+    justify-content:space-evenly;
+}
+.player-detail {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border-radius: 5px;
+    padding: 10px;
 }
 .Player-table {
     border-spacing:0px;
+    width:100%;
 }
+tr{
+
+}
+    tr .number {
+        width: 30px;
+    }
+    tr .name {
+        width: 150px;
+    }
+    tr .role {
+        width:30px;
+    }
+    tr .power {
+        width:30px;
+    }
 /*---------------------------navbar---------------------------*/
 nav {
     padding: 20px;
@@ -139,6 +164,24 @@ a {
         grid-template-columns:none;
         grid-template-rows: 20px auto;
     }
+    tr {
+    }
+
+        tr .number {
+            width: 20%;
+        }
+
+        tr .name {
+            width: 40%;
+        }
+
+        tr .role {
+            width: 20%;
+        }
+
+        tr .power {
+            width: 20%;
+        }
     /*---------------------------navbar---------------------------*/
     nav {
         width: calc(100% - 40px);
@@ -248,4 +291,18 @@ a {
             width: 100vw;
         }
 }
-/*---------------------------....---------------------------*/
+@media screen and (max-width: 500px) {
+    tr .line {
+        display:none;
+    }
+    tr .number {
+        display: none;
+    }
+}
+@media screen and (max-width: 400px) {
+    .player-box{
+        flex-direction:column;
+        height:auto;
+    }
+}
+    /*---------------------------....---------------------------*/

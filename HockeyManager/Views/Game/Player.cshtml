@@ -1,36 +1,64 @@
-﻿@model List<Player>
-<link rel="stylesheet" type="text/css" href="~/css/Inside.css">
+﻿@model HockeyManager.Models.TeamPlayers
 <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="~/css/Inside.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/js/inside.js"></script>
 </head>
 <container>
+    <div class="Important-message">
+        <h1>@ViewBag.Meddelande</h1>
+    </div>
     <div class="nav-box">
         @Html.Partial("NavPartial.cshtml")
     </div>
-    <content>
-        <h1>@ViewBag.Meddelande</h1>
-        <table id="playerTable"> 
-            <tr>
-                <td>Name</td>
-                <td>Number</td>
-                <td>Role</td>
-                <td>Power</td>
-                <td>Price</td>
-            </tr>
-            @foreach (var p in Model)
-            {
-                <tr>
-                    <td>@p.firstname @p.lastname</td>
-                    <td>@p.number</td>
-                    <td>@p.role</td>
-                    <td>@p.power</td>
-                    <td>@p.price</td>
-                </tr>
-            }
-        </table>
-        <div id="pagination"></div>
+    <content class="split-grid">
+        @{
+            <div class="left-box">
+                <h1>@Model.teamname</h1>
+                <label for="role-filter">Filter by Role:</label>
+                <select id="role-filter">
+                    <option value="">All Roles</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                    <option value="RW">RW</option>
+                    <option value="LW">LW</option>
+                    <option value="G">G</option>
+                </select>
+                <table class="Player-table">
+                    <tr class="player-box">
+                        <td class="number">Number:</td>
+                        <td class="center-text name">Name:</td>
+                        <td class="center-text line">|</td>
+                        <td class="center-text role">Role:</td>
+                        <td class="center-text line">|</td>
+                        <td class="center-text power">Pwr:</td>
+                    </tr>
+
+                    @foreach (var p in Model.Players)
+                    {
+                        <tr class="player-box player-click" data-player-id="@p.ID" data-role="@p.role">
+                            <td class="center-text number">@p.number</td>
+                            <td class="center-text name name-button">@p.firstname @p.lastname</td>
+                            <td class="center-text line">|</td>
+                            <td class="center-text role">@p.role</td>
+                            <td class="center-text line">|</td>
+                            <td class="center-text power">@p.power</td
+                            <td class="center-text power">@p.power</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+            <div class="right-box">
+                <div id="player-detail">
+                    @if (Model.SelectedPlayer != null)
+                    {
+                        @Html.Partial("PlayerDetail", Model.SelectedPlayer)
+                    }
+                    else
+                    {
+                        <h2>No player selected.</h2>
+                    }
+                </div>
+            </div>
+        }
     </content>
 </container>
-<script src="~/js/inside.js"></script>

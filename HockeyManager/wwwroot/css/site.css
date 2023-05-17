@@ -35,17 +35,18 @@ body {
 }
 
 .center-text {
-    border: 5px solid;
     display: flex;
     justify-content: center;
 }
-
-
 
 .error {
     color: red;
     font-size:20px;
     margin-bottom:10px;
+}
+
+.bg-dark-blue {
+    background-color: rgb(2, 43, 58);
 }
 
 .width-100{

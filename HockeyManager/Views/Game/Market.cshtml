@@ -1,53 +1,47 @@
-﻿@*<style>
-    td {
-        border: solid 1px black;
-        padding: 10px;
-    }
-</style>
-@model List<Produkt>
-<a class="nav-link" asp-area="" asp-controller="Produkt" asp-action="newProdukt">läg till Produkt</a>
-<div id="ProduktList">
-    @{
-        <h1>@ViewBag.Meddelande</h1>
-        <table>
-            <tr>
-                <td>Name:</td>
-                <td>Info:</td>
-                <td>Stock:</td>
-                <td>price:</td>
-                <td>id:</td>
-                <td></td>
-                <td></td>
+﻿@model List<Player>
+<link rel="stylesheet" type="text/css" href="~/css/Inside.css">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="~/css/Inside.css">
+</head>
+<container>
+    <div class="Important-message"><h1>@ViewBag.Meddelande</h1></div>
+    <div class="nav-box">
+        @Html.Partial("NavPartial.cshtml")
+    </div>
+    <content>
+        <label for="role-filter">Filter by Role:</label>
+        <select id="role-filter">
+            <option value="">All Roles</option>
+            <option value="C">C</option>
+            <option value="D">D</option>
+            <option value="RW">RW</option>
+            <option value="LW">LW</option>
+            <option value="G">G</option>
+        </select>
+        <table id="playerTable">
+            <tr class="player-box">
+                <td class="number">Number:</td>
+                <td class="center-text name">Name:</td>
+                <td class="center-text line">|</td>
+                <td class="center-text role">Role:</td>
+                <td class="center-text line">|</td>
+                <td class="center-text power">Pwr:</td>
             </tr>
-
-            @foreach (Produkt P in Model)
+            @foreach (var p in Model)
             {
-
-                <tr>
-                    <td>
-                        @P.produktnamn
-                    </td>
-                    <td>
-                        @P.produktinfo (@P.tillverkare)
-                    </td>
-                    <td>
-                        @P.stock
-                    </td>
-                    <td>
-                        @P.pris
-                    </td>
-                    <td>
-                        @P.id
-                    </td>
-                    <td>
-                        @Html.ActionLink("Edit", "redigeraProdukt", "Produkt", new {id = @P.id})
-                    </td>
-                    <td>
-                        @Html.ActionLink("Delete", "deleteProdukt", "Produkt", new {id = @P.id}, new { onclick = "return confirm('Are you sure you want to delete?');" })
-                    </td>
+                <tr class="player-box" data-role="@p.role">
+                    <td class="center-text number">@p.number</td>
+                    <td class="center-text name">@p.firstname @p.lastname</td>
+                    <td class="center-text line">|</td>
+                    <td class="center-text role">@p.role</td>
+                    <td class="center-text line">|</td>
+                    <td class="center-text power">@p.power</td>
                 </tr>
-
             }
         </table>
-    }
-</div>*@
+        <div id="pagination"></div>
+    </content>
+</container>
+<script src="~/js/inside.js"></script>

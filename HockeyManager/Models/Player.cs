@@ -21,10 +21,11 @@ namespace HockeyManager.Models
         public int shotsagainst { get; set; } = 0;
         public int saves { get; set; } = 0;
         public int ID { get; set; } = 0;
-
     }
     public class TeamPlayers
     {
+        public Player SelectedPlayer { get; set; }
+        public Player Player { get; set; }
         public List<Player> Players { get; set; }
         public string teamname { get; set; } = "";
     }
@@ -124,72 +125,106 @@ namespace HockeyManager.Models
 
         public static Player getSinglePlayerById(int id)
         {
-
             string conStr = "server=46.246.45.183;user=OliverEc;port=3306;database=HockeyManager_OE;password=YROSBKEE";
 
-            MySqlConnection conn = new MySqlConnection(conStr);
-            MySqlCommand MyCom = new MySqlCommand("Select * from Player where id = @ID", conn);
-            MyCom.Parameters.AddWithValue("@ID", id);
-            conn.Open();
-
-            MySqlDataReader reader = MyCom.ExecuteReader();
-
-            Player singleP = new Player();
-            if (reader.Read())
+            using (MySqlConnection conn = new MySqlConnection(conStr))
             {
-                singleP.ID = reader.GetInt32("ID");
-                singleP.teamID = reader.GetInt32("teamID");
-                singleP.number = reader.GetInt32("number");
-                singleP.firstname = reader.GetString("firstname");
-                singleP.lastname = reader.GetString("lastname");
-                singleP.role = reader.GetString("role");
-                singleP.power = reader.GetInt32("power");
-                singleP.price = reader.GetInt32("price");
-                singleP.gamesplayed = reader.GetInt32("gamesplayed");
-                singleP.goals = reader.GetInt32("goals");
-                singleP.shots = reader.GetInt32("shots");
-                singleP.shotsagainst = reader.GetInt32("shotsagainst");
-                singleP.saves = reader.GetInt32("saves");
+                conn.Open();
 
+                using (MySqlCommand MyCom = new MySqlCommand("SELECT * FROM Player WHERE id = @ID", conn))
+                {
+                    MyCom.Parameters.AddWithValue("@ID", id);
+
+                    using (MySqlDataReader reader = MyCom.ExecuteReader())
+                    {
+                        Player singleP = new Player();
+
+                        if (reader.Read())
+                        {
+                            singleP.ID = reader.GetInt32("ID");
+                            singleP.teamID = reader.GetInt32("teamID");
+                            singleP.number = reader.GetInt32("number");
+                            singleP.firstname = reader.GetString("firstname");
+                            singleP.lastname = reader.GetString("lastname");
+                            singleP.role = reader.GetString("role");
+                            singleP.power = reader.GetInt32("power");
+                            singleP.price = reader.GetInt32("price");
+                            singleP.gamesplayed = reader.GetInt32("gamesplayed");
+                            singleP.goals = reader.GetInt32("goals");
+                            singleP.shots = reader.GetInt32("shots");
+                            singleP.shotsagainst = reader.GetInt32("shotsagainst");
+                            singleP.saves = reader.GetInt32("saves");
+                        }
+
+                        return singleP;
+                    }
+                }
             }
-
-            MyCom.Dispose();
-            conn.Close();
-
-            return singleP;
         }
+
+        public static bool trainPlayer(Player p, int updatedPower, User u, int updatedCurrency)
+        {
+            string conStr = "server=46.246.45.183;user=OliverEc;port=3306;database=HockeyManager_OE;password=YROSBKEE";
+            using (MySqlConnection conn = new MySqlConnection(conStr))
+            {
+                conn.Open();
+
+                MySqlCommand playerCmd = new MySqlCommand("UPDATE `Player` SET `power` = @power WHERE `ID` = @ID", conn);
+                playerCmd.Parameters.AddWithValue("@power", updatedPower);
+                playerCmd.Parameters.AddWithValue("@ID", p.ID);
+
+                int rader = playerCmd.ExecuteNonQuery();
+
+                MySqlCommand userCmd = new MySqlCommand("UPDATE `User` SET `currency` = @currency WHERE `ID` = @ID", conn);
+                userCmd.Parameters.AddWithValue("@currency", updatedCurrency);
+                userCmd.Parameters.AddWithValue("@ID", u.ID);
+
+                rader = userCmd.ExecuteNonQuery();
+
+                playerCmd.Dispose();
+                userCmd.Dispose();
+
+                conn.Close();
+                if (rader == 0)
+                    return false;
+                else
+                    return true;
+            }
+        }
+
+
 
         public static bool savePlayer(Player p)
         {
-
             string conStr = "server=46.246.45.183;user=OliverEc;port=3306;database=HockeyManager_OE;password=YROSBKEE";
+            using (MySqlConnection conn = new MySqlConnection(conStr))
+            {
+                conn.Open();
 
-            MySqlConnection conn = new MySqlConnection(conStr);
-            MySqlCommand MyCom = new MySqlCommand("UPDATE `Player` SET `teamID`='@teamID',`number`='@number',`firstname`='@firstname',`lastname`='@lastname',`role`='@role',`power`='@power',`price`='@price',`gamesPlayed`='@gamesplayed',`goals`='@goals',`shots`='@shots',`shotsagainst`='@shotsagainst]',`saves`='@saves' where `ID`='@ID'", conn);
-            MyCom.Parameters.AddWithValue("@teamID", p.teamID);
-            MyCom.Parameters.AddWithValue("@number", p.number);
-            MyCom.Parameters.AddWithValue("@firstname", p.firstname);
-            MyCom.Parameters.AddWithValue("@lastname", p.lastname);
-            MyCom.Parameters.AddWithValue("@role", p.role);
-            MyCom.Parameters.AddWithValue("@power", p.power);
-            MyCom.Parameters.AddWithValue("@price", p.price);
-            MyCom.Parameters.AddWithValue("@gamesplayed", p.gamesplayed);
-            MyCom.Parameters.AddWithValue("@goals", p.goals);
-            MyCom.Parameters.AddWithValue("@shots", p.shots);
-            MyCom.Parameters.AddWithValue("@shotsagainst", p.shotsagainst);
-            MyCom.Parameters.AddWithValue("@saves", p.saves);
-            MyCom.Parameters.AddWithValue("@ID", p.ID);
-            conn.Open();
+                MySqlCommand MyCom = new MySqlCommand("UPDATE `Player` SET `teamID` = @teamID, `number` = @number, `firstname` = @firstname, `lastname` = @lastname, `role` = @role, `power` = @power, `price` = @price, `gamesplayed` = @gamesplayed, `goals` = @goals, `shots` = @shots, `shotsagainst` = @shotsagainst, `saves` = @saves WHERE `ID` = @ID", conn);
+                MyCom.Parameters.AddWithValue("@teamID", p.teamID);
+                MyCom.Parameters.AddWithValue("@number", p.number);
+                MyCom.Parameters.AddWithValue("@firstname", p.firstname);
+                MyCom.Parameters.AddWithValue("@lastname", p.lastname);
+                MyCom.Parameters.AddWithValue("@role", p.role);
+                MyCom.Parameters.AddWithValue("@power", p.power);
+                MyCom.Parameters.AddWithValue("@price", p.price);
+                MyCom.Parameters.AddWithValue("@gamesplayed", p.gamesplayed);
+                MyCom.Parameters.AddWithValue("@goals", p.goals);
+                MyCom.Parameters.AddWithValue("@shots", p.shots);
+                MyCom.Parameters.AddWithValue("@shotsagainst", p.shotsagainst);
+                MyCom.Parameters.AddWithValue("@saves", p.saves);
+                MyCom.Parameters.AddWithValue("@ID", p.ID);
 
-            int rader = MyCom.ExecuteNonQuery();
+                int rowsAffected = MyCom.ExecuteNonQuery();
 
-            MyCom.Dispose();
-            conn.Close();
+                MyCom.Dispose();
+                conn.Close();
 
-            if (rader == 0) return false; else return true;
-
-
+                return rowsAffected > 0;
+            }
         }
+
         public static bool savenewPlayer(Player p)
         {
 
