@@ -29,16 +29,16 @@ namespace HockeyManager.Models
         public int TeamID { get; set; } = 0;
         public Player SelectedPlayer { get; set; }
         public List<Player> Players { get; set; }
-        public string teamname { get; set; } = "";
+        public string TeamName { get; set; } = "";
     }
 
     public static class PlayerManager
     {
-        public static List<Player> getAllUnownedPlayers()
+        public static TeamPlayers getAllUnownedPlayers()
         {
             string conStr = "server=46.246.45.183;user=OliverEc;port=3306;database=HockeyManager_OE;password=YROSBKEE";
 
-            List<Player> Players = new List<Player>();
+            List<Player> unownedPlayers = new List<Player>();
             MySqlConnection conn = new MySqlConnection(conStr);
             MySqlCommand MyCom = new MySqlCommand("SELECT * FROM `Player` WHERE `TeamID` = 0", conn);
 
@@ -62,14 +62,15 @@ namespace HockeyManager.Models
                 p.shots = reader.GetInt32("shots");
                 p.shotsagainst = reader.GetInt32("shotsagainst");
                 p.saves = reader.GetInt32("saves");
-                Players.Add(p);
+                unownedPlayers.Add(p);
             }
 
             MyCom.Dispose();
             conn.Close();
 
-            return Players;
+            return new TeamPlayers { Players = unownedPlayers };
         }
+
 
         public static TeamPlayers getAllOwnedPlayers(int teamID)
         {
@@ -122,7 +123,7 @@ namespace HockeyManager.Models
                 conn.Close();
             }
 
-            return new TeamPlayers { Players = Players, teamname = teamname, TeamID = teamID };
+            return new TeamPlayers { Players = Players, TeamName = teamname, TeamID = teamID };
         }
 
 

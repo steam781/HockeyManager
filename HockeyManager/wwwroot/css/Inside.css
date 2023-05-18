@@ -31,17 +31,21 @@ form{
     position: sticky;
     bottom: 0;
 }
-.Important-message{
+.Important-message {
     position:absolute;
     top:0;
     width:100%;
 }
-.split-grid{
+.split-grid {
     display:grid;
     grid-gap:20px;
     grid-template-areas:"left-box right-box";
     grid-template-columns:calc(50% - 10px);
 }
+.left-box {
+    font-size:0px;
+}
+
 .right-box {
     position: relative;
     height: 100%;
@@ -55,7 +59,7 @@ form{
     position: absolute;
     top:0px;
 }
-button.submit{
+button.submit {
     position:absolute;
     top:-10px;
     left:-20px
@@ -98,6 +102,7 @@ button.submit{
 .Player-table {
     border-spacing:0px;
     width:100%;
+    font-size:initial;
 }
 .player-image img {
     max-width: 100%;

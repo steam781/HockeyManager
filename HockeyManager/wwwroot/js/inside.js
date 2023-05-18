@@ -1,13 +1,24 @@
 ﻿// JavaScript Code (inside.js)
+// Har anävnt ChatGTP för komentarer då det underlättar med orginisation
 // Pagination and Filtering
+
+if (typeof jQuery === 'undefined') {
+    console.error('jQuery is not loaded.');
+} else {
+    console.log('jQuery is loaded successfully.');
+}
+
 function filterAndPaginateTable(pageNumber) {
     var selectedRole = document.getElementById('role-filter');
     if (!selectedRole) return; // Check if the element exists
 
+    console.log('filterAndPaginateTable function called.');
+
     selectedRole = selectedRole.value;
     var table, rowsPerPage, rows, filteredRows, totalPages, i;
 
-    table = document.getElementById("playerTable");
+    table = document.getElementById("Player-table");
+
     if (!table) return; // Check if the table exists
 
     rowsPerPage = 30;
@@ -177,7 +188,6 @@ function handleDropEvent(event) {
         }
     }
 
-    // Prevent the default drop behavior
     event.preventDefault();
 }
 
@@ -212,4 +222,5 @@ $(document).ready(function () {
                 alert("An error occurred while retrieving the player information.");
             }
         });
-    }
+    });
+});
