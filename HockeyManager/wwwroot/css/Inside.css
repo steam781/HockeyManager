@@ -25,7 +25,7 @@ content {
     padding:10px;
 }
 form{
-    width:100%;
+    
 }
 #pagination {
     position: sticky;
@@ -42,13 +42,23 @@ form{
     grid-template-areas:"left-box right-box";
     grid-template-columns:calc(50% - 10px);
 }
-.right-box{
-    height:100%;
-    display:flex;
-    justify-content:center;
+.right-box {
+    position: relative;
+    height: 100%;
+    display: flex;
+    justify-content: center;
 }
-.right-box-team{
-    display:grid;
+.right-box-team {
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    position: absolute;
+    top:0px;
+}
+button.submit{
+    position:absolute;
+    top:-10px;
+    left:-20px
 }
 .player-box {
     width: 100%;
@@ -104,9 +114,8 @@ form{
 
 }
 .team-player-box {
+    color: white;
     display: flex;
-    position: fixed;
-    top:10;
     flex-direction: column;
     justify-content: center;
     width: 100px;
@@ -114,14 +123,47 @@ form{
     border-radius: 100px;
     border: solid;
     border-color: black;
+    background-color: rgb(2, 43, 58);
+    transition: left 0.3s, top 0.3s;
 }
+    .team-player-box#LW {
+        position: absolute;
+        top:470px;
+        left:40px;
+    }
+    .team-player-box#C {
+        position: absolute;
+        top: 470px;
+        left: 208px;
+    }
+    .team-player-box#RW {
+        position: absolute;
+        top: 470px;
+        left: 375px;
+    }
+    .team-player-box#LD {
+        position: absolute;
+        top: 300px;
+        left: 125px;
+    }
+    .team-player-box#RD {
+        position: absolute;
+        top: 300px;
+        left: 290px;
+    }
+    .team-player-box#G {
+        position: absolute;
+        top: 50px;
+        left: 208px;
+    }
+
 .rink-image {
     width: 100px;
-    justify-content:center;
+    justify-content: center;
 }
 .rink-standing-image {
     width: auto;
-    height: 95%;
+    height: 95vh;
 }
 tr {
 }
@@ -219,15 +261,249 @@ a {
         background-color: #fff;
         margin: 5px;
     }
-@media screen and (max-width: 1400px) {
+@media screen and (max-width: 1420px) {
     .rink-standing-image{
         width:100%;
         height:auto;
     }
 }
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1350px) {
+    .rink-standing-image {
+        width: 460px;
+        height: auto;
+    }
+    .team-player-box#LW {
+        position: absolute;
+        top: 410px;
+        left: 20px;
+    }
+
+    .team-player-box#C {
+        position: absolute;
+        top: 410px;
+        left: 176px;
+    }
+
+    .team-player-box#RW {
+        position: absolute;
+        top: 410px;
+        left: 330px;
+    }
+
+    .team-player-box#LD {
+        position: absolute;
+        top: 270px;
+        left: 100px;
+    }
+
+    .team-player-box#RD {
+        position: absolute;
+        top: 270px;
+        left: 270px;
+    }
+
+    .team-player-box#G {
+        position: absolute;
+        top: 20px;
+        left: 176px;
+    }
+}
+@media screen and (max-width: 1280px) {
+    .rink-standing-image {
+        width: 430px;
+        height: auto;
+    }
+    .team-player-box#LW {
+        position: absolute;
+        top: 380px;
+        left: 20px;
+    }
+
+    .team-player-box#C {
+        position: absolute;
+        top: 380px;
+        left: 164px;
+    }
+
+    .team-player-box#RW {
+        position: absolute;
+        top: 380px;
+        left: 300px;
+    }
+
+    .team-player-box#LD {
+        position: absolute;
+        top: 250px;
+        left: 90px;
+    }
+
+    .team-player-box#RD {
+        position: absolute;
+        top: 250px;
+        left: 240px;
+    }
+
+    .team-player-box#G {
+        position: absolute;
+        top: 20px;
+        left: 164px;
+    }
+}
+@media screen and (max-width: 1205px) {
     .player-image{
         display:none;
+    }
+    .rink-standing-image {
+        width: 370px;
+        height: auto;
+    }
+    .team-player-box#LW {
+        position: absolute;
+        top: 320px;
+        left: 10px;
+    }
+
+    .team-player-box#C {
+        position: absolute;
+        top: 320px;
+        left: 131px;
+    }
+
+    .team-player-box#RW {
+        position: absolute;
+        top: 320px;
+        left: 250px;
+    }
+
+    .team-player-box#LD {
+        position: absolute;
+        top: 210px;
+        left: 60px;
+    }
+
+    .team-player-box#RD {
+        position: absolute;
+        top: 210px;
+        left: 200px;
+    }
+
+    .team-player-box#G {
+        position: absolute;
+        top: 10px;
+        left: 131px;
+    }
+}
+@media screen and (max-width: 1100px) {
+
+    .rink-standing-image {
+        width: 330px;
+        height: auto;
+    }
+    .team-player-box#LW {
+        position: absolute;
+        top: 280px;
+        left: 5px;
+    }
+
+    .team-player-box#C {
+        position: absolute;
+        top: 280px;
+        left: 115px;
+    }
+
+    .team-player-box#RW {
+        position: absolute;
+        top: 280px;
+        left: 225px;
+    }
+
+    .team-player-box#LD {
+        position: absolute;
+        top: 180px;
+        left: 60px;
+    }
+
+    .team-player-box#RD {
+        position: absolute;
+        top: 180px;
+        left: 175px;
+    }
+
+    .team-player-box#G {
+        position: absolute;
+        top: 5px;
+        left: 115px;
+    }
+}
+@media screen and (max-width: 1005px) {
+    .rink-standing-image {
+        width: 305px;
+        height: auto;
+    }
+
+    .team-player-box#LW {
+        position: absolute;
+        top: 260px;
+        left: 0px;
+    }
+
+    .team-player-box#C {
+        position: absolute;
+        top: 260px;
+        left: 100px;
+    }
+
+    .team-player-box#RW {
+        position: absolute;
+        top: 260px;
+        left: 200px;
+    }
+
+    .team-player-box#LD {
+        position: absolute;
+        top: 150px;
+        left: 40px;
+    }
+
+    .team-player-box#RD {
+        position: absolute;
+        top: 150px;
+        left: 160px;
+    }
+
+    .team-player-box#G {
+        position: absolute;
+        top: 20px;
+        left: 100px;
+    }
+}
+@media screen and (max-width: 960px) {
+    .rink-standing-image {
+        display:none;
+    }
+
+    .team-player-box#LW {
+        position: initial;
+    }
+
+    .team-player-box#C {
+        position: initial;
+    }
+
+    .team-player-box#RW {
+        position: initial;
+    }
+
+    .team-player-box#LD {
+        position: initial;
+    }
+
+    .team-player-box#RD {
+        position: initial;
+    }
+
+    .team-player-box#G {
+        position:initial;
     }
 }
 @media screen and (max-width: 900px) {

@@ -21,6 +21,8 @@ namespace HockeyManager.Models
         public int shotsagainst { get; set; } = 0;
         public int saves { get; set; } = 0;
         public int ID { get; set; } = 0;
+        public List<Player> Players { get; set; }
+        public Player SelectedPlayer { get; set; }
     }
     public class TeamPlayers
     {

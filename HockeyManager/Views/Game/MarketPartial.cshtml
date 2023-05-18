@@ -1,0 +1,33 @@
+﻿@model HockeyManager.Models.Player
+<div class="bg-dark-blue center-text player-detail-box">
+    <h1>Selected Player</h1>
+</div>
+@if (Model != null)
+{
+    <div class="bg-dark-blue player-detail-box player-basic-info">
+        <div class="player-image"><img src="~/media/Player.jpeg" alt="PlayerImage" width="200" height="200"></div>
+        <div class="player-info">
+            <h2 class="size3">Number: @Model.number</h2>
+            <h2 class="size3">@Model.firstname @Model.lastname</h2>
+            <div>
+                <h2 class="size3">@Model.role</h2>
+                <h2 class="size3">@Model.power</h2>
+            </div>
+        </div>
+    </div>
+    <div class="bg-dark-blue player-detail-box player-advanced-info">
+        <h1 class="size3">work in progress</h1>
+    </div>
+    <div class="bg-dark-blue player-detail-box player-actions-info">
+        <div class="Action-button">@Html.ActionLink("Train player", "MyTeamPlayer", "Game", new { id = Model.ID }, null)</div>
+        <div>
+            <h2>Value: @Model.price$</h2>
+            <div class="Action-button">@Html.ActionLink("Sell", "sellPlayer", "Player", new { id = Model.ID }, new { onclick = "return confirm('Are you sure you want to sell?');" })</div>
+        </div>
+    </div>
+}
+else
+{
+    <h2>Player not found.</h2>
+}
+

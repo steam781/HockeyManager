@@ -197,3 +197,19 @@ function handleDropEvent(event) {
 //        }
 //    });
 //}
+
+$(document).ready(function () {
+    $(".player").click(function () {
+        var playerId = $(this).attr("id");
+        $.ajax({
+            url: "/Market/GetPlayerPartial",
+            data: { playerId: playerId },
+            type: "GET",
+            success: function (data) {
+                $("#selectedPlayerPartial").html(data);
+            },
+            error: function () {
+                alert("An error occurred while retrieving the player information.");
+            }
+        });
+    }
