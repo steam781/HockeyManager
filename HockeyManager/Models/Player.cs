@@ -24,8 +24,8 @@ namespace HockeyManager.Models
     }
     public class TeamPlayers
     {
+        public int TeamID { get; set; } = 0;
         public Player SelectedPlayer { get; set; }
-        public Player Player { get; set; }
         public List<Player> Players { get; set; }
         public string teamname { get; set; } = "";
     }
@@ -104,13 +104,14 @@ namespace HockeyManager.Models
                 }
                 reader.Close();
 
-                MySqlCommand teamCmd = new MySqlCommand("SELECT `name` FROM `Team` WHERE `TeamID` = @teamID", conn);
+                MySqlCommand teamCmd = new MySqlCommand("SELECT `Name`, `TeamID` FROM `Team` WHERE `TeamID` = @teamID", conn);
                 teamCmd.Parameters.AddWithValue("@teamID", teamID);
 
                 reader = teamCmd.ExecuteReader();
                 if (reader.Read())
                 {
                     teamname = reader.GetString("name");
+                    teamID = reader.GetInt32("teamID");
                 }
                 reader.Close();
 
@@ -119,7 +120,7 @@ namespace HockeyManager.Models
                 conn.Close();
             }
 
-            return new TeamPlayers { Players = Players, teamname = teamname };
+            return new TeamPlayers { Players = Players, teamname = teamname, TeamID = teamID };
         }
 
 

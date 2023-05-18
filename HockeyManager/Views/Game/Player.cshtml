@@ -18,12 +18,13 @@
                 <select id="role-filter">
                     <option value="">All Roles</option>
                     <option value="C">C</option>
-                    <option value="D">D</option>
+                    <option value="LD">LD</option>
+                    <option value="RD">RD</option>
                     <option value="RW">RW</option>
                     <option value="LW">LW</option>
                     <option value="G">G</option>
                 </select>
-                <table class="Player-table">
+                <table class="Player-table" id="playerTable">
                     <tr class="player-box">
                         <td class="number">Number:</td>
                         <td class="center-text name">Name:</td>
@@ -46,17 +47,18 @@
                         </tr>
                     }
                 </table>
+                <div id="pagination"></div>
             </div>
             <div class="right-box">
-                <div id="player-detail">
-                    @if (Model.SelectedPlayer != null)
-                    {
-                        @Html.Partial("PlayerDetail", Model.SelectedPlayer)
-                    }
-                    else
-                    {
-                        <h2>No player selected.</h2>
-                    }
+                <div id="player-detail" class="player-detail">
+                        @if (Model.SelectedPlayer != null)
+                        {
+                            @Html.Partial("PlayerDetail", Model.SelectedPlayer)
+                        }
+                        else
+                        {
+                            <h2>No player selected.</h2>
+                        }
                 </div>
             </div>
         }

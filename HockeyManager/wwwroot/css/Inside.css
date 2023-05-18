@@ -24,6 +24,9 @@ content {
     margin:10px;
     padding:10px;
 }
+form{
+    width:100%;
+}
 #pagination {
     position: sticky;
     bottom: 0;
@@ -39,28 +42,88 @@ content {
     grid-template-areas:"left-box right-box";
     grid-template-columns:calc(50% - 10px);
 }
+.right-box{
+    height:100%;
+    display:flex;
+    justify-content:center;
+}
+.right-box-team{
+    display:grid;
+}
 .player-box {
     width: 100%;
     align-items: center;
     height: 50px;
     background-color: rgb(2, 43, 58);
     margin-bottom: 2px;
-    display:flex;
-    justify-content:space-evenly;
+    display: flex;
+    justify-content: space-evenly;
+}
+.player-click:hover {
+    background-color: rgba(0, 140, 241, 1);
+    box-shadow: 6px 4px 10px rgba(0, 0, 0, 0.7);
+    color: black;
+}
+.player-click:active {
+    background-color: rgba(0, 140, 241, 1);
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.7);
+    color: black;
+}
+.selected {
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.7);
 }
 .player-detail {
     display: flex;
     flex-direction: column;
     height: 100%;
+    position: sticky;
+    top: 0;
+}
+.player-detail-box {
     border-radius: 5px;
     padding: 10px;
+    margin-bottom: 5px;
+    width: calc(100% - 20px);
 }
 .Player-table {
     border-spacing:0px;
     width:100%;
 }
-tr{
+.player-image img {
+    max-width: 100%;
+    height: auto;
+}
+.player-basic-info{
+    display:grid;
+    grid-template-areas:"player-image player-info"
+}
+.player-advanced-info{
 
+}
+.player-actions-info{
+
+}
+.team-player-box {
+    display: flex;
+    position: fixed;
+    top:10;
+    flex-direction: column;
+    justify-content: center;
+    width: 100px;
+    height: 100px;
+    border-radius: 100px;
+    border: solid;
+    border-color: black;
+}
+.rink-image {
+    width: 100px;
+    justify-content:center;
+}
+.rink-standing-image {
+    width: auto;
+    height: 95%;
+}
+tr {
 }
     tr .number {
         width: 30px;
@@ -156,7 +219,25 @@ a {
         background-color: #fff;
         margin: 5px;
     }
-
+@media screen and (max-width: 1400px) {
+    .rink-standing-image{
+        width:100%;
+        height:auto;
+    }
+}
+@media screen and (max-width: 1200px) {
+    .player-image{
+        display:none;
+    }
+}
+@media screen and (max-width: 900px) {
+    tr .number{
+        display:none;
+    }
+    tr .name{
+        width:100px;
+    }
+}
 @media screen and (max-width: 768px) {
     /*---------------------------common---------------------------*/
     container {

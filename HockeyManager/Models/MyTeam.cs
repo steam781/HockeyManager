@@ -10,32 +10,109 @@ namespace HockeyManager.Models
         public int OwnerID { get; set; } = 0;
         public string Name { get; set; } = "";
         public string Logocode { get; set; } = "";
-        public int LFPID { get; set; } = 0;
+        public int LF { get; set; } = 0;
         //LFPID = LeftForwardPlayerID 
-        public int RFPID { get; set; } = 0;
+        public int RF { get; set; } = 0;
         //RFPID = RightForwardPlayerID 
-        public int CPID { get; set; } = 0;
+        public int C { get; set; } = 0;
         //CPID = CenterPlayerID
-        public int LDPID { get; set; } = 0;
+        public int LD { get; set; } = 0;
         //LDPID = LeftDefenderPlayerID
-        public int RDPID { get; set; } = 0;
+        public int RD { get; set; } = 0;
         //RDPID = RightDefenderPlayerID
-        public int GPID { get; set; } = 0;
+        public int G { get; set; } = 0;
         //GPID = GoliePlayerID
         public int GamesPlayed { get; set; } = 0;
         public int Goals { get; set; } = 0;
         public int GoalsAgainst { get; set; } = 0;
         public int Shots { get; set; } = 0;
         public int ShotsAgainst { get; set; } = 0;
-        public int TeamID { get; set; } = 0;
+        public int TeamID { get; set; }
+        public string TeamName { get; set; }
+        public List<Player> TeamPlayers { get; set; }
+        public List<Player> TeamPlayerRoles { get; set; }
 
-        public static List<MyTeam> GetTeamInfo(int teamID)
+        public int ID { get; set; } = 0;
+        public string teamname { get; set; } = "";
+        public int number { get; set; } = 0;
+        public string firstname { get; set; } = "";
+        public string lastname { get; set; } = "";
+        public string role { get; set; } = "";
+        public int power { get; set; } = 0;
+        public int price { get; set; } = 0;
+        public int gamesplayed { get; set; } = 0;
+        public int goals { get; set; } = 0;
+        public int shots { get; set; } = 0;
+        public int shotsagainst { get; set; } = 0;
+        public int saves { get; set; } = 0;
+
+
+        public static MyTeam GetSingleTeamInfo(int teamID)
+        {
+            string conStr = "server=46.246.45.183;user=OliverEc;port=3306;database=HockeyManager_OE;password=YROSBKEE";
+
+            MySqlConnection conn = new MySqlConnection(conStr);
+            MySqlCommand MyCom = new MySqlCommand("SELECT * FROM Player LEFT JOIN Team ON Player.ID = Team.LeftForwardPlayerID OR Player.ID = Team.RightForwardPlayerID OR Player.ID = Team.CenterPlayerID OR Player.ID = Team.LeftDefenderPlayerID OR Player.ID = Team.RightDefenderPlayerID OR Player.ID = Team.GoliePlayerID WHERE Player.TeamID = @teamID", conn);
+            MyCom.Parameters.AddWithValue("@teamID", teamID);
+
+            conn.Open();
+
+            MySqlDataReader reader = MyCom.ExecuteReader();
+
+            MyTeam teamInfo = null;
+            if (reader.Read())
+            {
+                teamInfo = new MyTeam();
+                teamInfo.TeamID = reader.GetInt32("teamID");
+                teamInfo.OwnerID = reader.GetInt32("ownerID");
+                teamInfo.Name = reader.GetString("name");
+                teamInfo.Logocode = reader.GetString("logocode");
+                teamInfo.LF = reader.GetInt32("LeftForwardPlayerID");
+                teamInfo.RF = reader.GetInt32("RightForwardPlayerID");
+                teamInfo.C = reader.GetInt32("CenterPlayerID");
+                teamInfo.LD = reader.GetInt32("LeftDefenderPlayerID");
+                teamInfo.RD = reader.GetInt32("RightDefenderPlayerID");
+                teamInfo.G = reader.GetInt32("GoliePlayerID");
+                teamInfo.GamesPlayed = reader.GetInt32("gamesplayed");
+                teamInfo.Goals = reader.GetInt32("goals");
+                teamInfo.GoalsAgainst = reader.GetInt32("goalsAgainst");
+                teamInfo.Shots = reader.GetInt32("shots");
+                teamInfo.ShotsAgainst = reader.GetInt32("shotsagainst");
+
+                teamInfo.TeamPlayerRoles = new List<Player>();
+
+                foreach (MyTeam playerPosition in GetTeamPlayerPositions(teamID))
+                {
+                    Player player = new Player()
+                    {
+                        ID = playerPosition.ID,
+                        firstname = playerPosition.firstname,
+                        lastname = playerPosition.lastname,
+                        number = playerPosition.number,
+                        role = playerPosition.role,
+                        // Assign other properties as needed
+                    };
+
+                    teamInfo.TeamPlayerRoles.Add(player);
+                }
+            }
+
+            MyCom.Dispose();
+            conn.Close();
+
+            return teamInfo;
+        }
+
+        public static List<MyTeam> GetTeamPlayerPositions(int teamID)
         {
             string conStr = "server=46.246.45.183;user=OliverEc;port=3306;database=HockeyManager_OE;password=YROSBKEE";
 
             List<MyTeam> TeamInfo = new List<MyTeam>();
             MySqlConnection conn = new MySqlConnection(conStr);
-            MySqlCommand MyCom = new MySqlCommand("SELECT * FROM `Team` WHERE `TeamID` = @teamID", conn);
+            MySqlCommand MyCom = new MySqlCommand("SELECT Player.ID, Player.firstname, Player.lastname, Player.number, Player.role FROM Player LEFT JOIN Team AS TeamLF ON Player.ID = TeamLF.LeftForwardPlayerID LEFT JOIN Team AS TeamC ON Player.ID = TeamC.CenterPlayerID LEFT JOIN Team AS TeamRF ON Player.ID = TeamRF.RightForwardPlayerID LEFT JOIN Team AS TeamLD ON Player.ID = TeamLD.LeftDefenderPlayerID LEFT JOIN Team AS TeamRD ON Player.ID = TeamRD.RightDefenderPlayerID LEFT JOIN Team AS TeamG ON Player.ID = TeamG.GoliePlayerID WHERE TeamLF.TeamID = @teamID OR TeamC.TeamID = @teamID OR TeamRF.TeamID = @teamID OR TeamLD.TeamID = @teamID OR TeamRD.TeamID = @teamID OR TeamG.TeamID = @teamID", conn);
+
+            // Add the parameter to the command
+            MyCom.Parameters.AddWithValue("@teamID", teamID);
 
             conn.Open();
 
@@ -44,21 +121,11 @@ namespace HockeyManager.Models
             while (reader.Read())
             {
                 MyTeam t = new MyTeam();
-                t.TeamID = reader.GetInt32("teamID");
-                t.OwnerID = reader.GetInt32("ownerID");
-                t.Name = reader.GetString("name");
-                t.Logocode = reader.GetString("logocode");
-                t.LFPID = reader.GetInt32("lfpid");
-                t.RFPID = reader.GetInt32("rfpid");
-                t.CPID = reader.GetInt32("cpid");
-                t.LDPID = reader.GetInt32("ldpid");
-                t.RDPID = reader.GetInt32("rdpid");
-                t.GPID = reader.GetInt32("gpid");
-                t.GamesPlayed = reader.GetInt32("gamesplayed");
-                t.Goals = reader.GetInt32("goals");
-                t.GoalsAgainst = reader.GetInt32("goalsAgainst");
-                t.Shots = reader.GetInt32("shots");
-                t.ShotsAgainst = reader.GetInt32("shotsagainst");
+                t.ID = reader.GetInt32("ID");
+                t.firstname = reader.GetString("firstname");
+                t.lastname = reader.GetString("lastname");
+                t.number = reader.GetInt32("number");
+                t.role = reader.GetString("role");
                 TeamInfo.Add(t);
             }
 
@@ -68,45 +135,37 @@ namespace HockeyManager.Models
             return TeamInfo;
         }
 
-        public static List<MyTeam> GetTeamPlayerInfo(int teamID)
+
+
+        public static void SaveTeamPositions(int teamID, MyTeam t)
         {
             string conStr = "server=46.246.45.183;user=OliverEc;port=3306;database=HockeyManager_OE;password=YROSBKEE";
 
-            List<MyTeam> TeamInfo = new List<MyTeam>();
-            MySqlConnection conn = new MySqlConnection(conStr);
-            MySqlCommand MyCom = new MySqlCommand("SELECT * FROM `Team` LEFT JOIN Player ON Team.TeamID = Player.TeamID WHERE `TeamID` = @teamID", conn);
-
-            conn.Open();
-
-            MySqlDataReader reader = MyCom.ExecuteReader();
-
-            while (reader.Read())
+            using (MySqlConnection conn = new MySqlConnection(conStr))
             {
-                MyTeam t = new MyTeam();
-                t.TeamID = reader.GetInt32("teamID");
-                t.OwnerID = reader.GetInt32("ownerID");
-                t.Name = reader.GetString("name");
-                t.Logocode = reader.GetString("logocode");
-                t.LFPID = reader.GetInt32("lfpid");
-                t.RFPID = reader.GetInt32("rfpid");
-                t.CPID = reader.GetInt32("cpid");
-                t.LDPID = reader.GetInt32("ldpid");
-                t.RDPID = reader.GetInt32("rdpid");
-                t.GPID = reader.GetInt32("gpid");
-                t.GamesPlayed = reader.GetInt32("gamesplayed");
-                t.Goals = reader.GetInt32("goals");
-                t.GoalsAgainst = reader.GetInt32("goalsAgainst");
-                t.Shots = reader.GetInt32("shots");
-                t.ShotsAgainst = reader.GetInt32("shotsagainst");
-                TeamInfo.Add(t);
+                conn.Open();
+
+                MySqlCommand updateCommand = new MySqlCommand(
+                    "UPDATE `Team` SET " +
+                    "`LeftForwardPlayerID` = (CASE WHEN `TeamID` = @teamID THEN @lfpid ELSE `LeftForwardPlayerID` END), " +
+                    "`RightForwardPlayerID` = (CASE WHEN `TeamID` = @teamID THEN @rfpid ELSE `RightForwardPlayerID` END), " +
+                    "`CenterPlayerID` = (CASE WHEN `TeamID` = @teamID THEN @cpid ELSE `CenterPlayerID` END), " +
+                    "`LeftDefenderPlayerID` = (CASE WHEN `TeamID` = @teamID THEN @ldpid ELSE `LeftDefenderPlayerID` END), " +
+                    "`RightDefenderPlayerID` = (CASE WHEN `TeamID` = @teamID THEN @rdpid ELSE `RightDefenderPlayerID` END), " +
+                    "`GoliePlayerID` = (CASE WHEN `TeamID` = @teamID THEN @gpid ELSE `GoliePlayerID` END) " +
+                    "WHERE `TeamID` = @teamID", conn);
+
+                updateCommand.Parameters.Clear();
+                updateCommand.Parameters.AddWithValue("@lfpid", t.LF);
+                updateCommand.Parameters.AddWithValue("@rfpid", t.RF);
+                updateCommand.Parameters.AddWithValue("@cpid", t.C);
+                updateCommand.Parameters.AddWithValue("@ldpid", t.LD);
+                updateCommand.Parameters.AddWithValue("@rdpid", t.RD);
+                updateCommand.Parameters.AddWithValue("@gpid", t.G);
+                updateCommand.Parameters.AddWithValue("@teamID", teamID);
+
+                updateCommand.ExecuteNonQuery();
             }
-
-            MyCom.Dispose();
-            conn.Close();
-
-            return TeamInfo;
         }
-
     }
-
 }

@@ -1,4 +1,5 @@
-﻿// Pagination and Filtering
+﻿// JavaScript Code (inside.js)
+// Pagination and Filtering
 function filterAndPaginateTable(pageNumber) {
     var selectedRole = document.getElementById('role-filter');
     if (!selectedRole) return; // Check if the element exists
@@ -37,9 +38,6 @@ function filterAndPaginateTable(pageNumber) {
     generatePaginationButtons(pageNumber, totalPages);
 }
 
-
-
-
 function generatePaginationButtons(currentPage, totalPages) {
     var paginationDiv = document.getElementById("pagination");
     if (!paginationDiv) return; // Check if the pagination div exists
@@ -71,7 +69,6 @@ if (document.getElementById('role-filter') != null) {
 }
 
 //PlayerDetails
-
 $(document).ready(function () {
     $('.player-click').click(function () {
         console.log("you tried");
@@ -93,8 +90,110 @@ $(document).ready(function () {
                 console.log('Error occurred while retrieving player details.');
             }
         });
-        
     });
 });
 
+function getPlayerIdFromDataTransfer(dataTransfer) {
+    let playerId = dataTransfer.getData('text/plain');
 
+    if (!playerId) {
+        playerId = dataTransfer.getData('text/html');
+        if (playerId) {
+            const tempElement = document.createElement('div');
+            tempElement.innerHTML = playerId;
+            const playerElement = tempElement.querySelector('[value]');
+            playerId = playerElement ? playerElement.getAttribute('value') : null;
+        }
+    }
+    console.log(playerId)
+    return playerId;
+}
+
+// Get all team player boxes
+const playerBoxes = document.querySelectorAll('.player-box');
+const teamPlayerBoxes = document.querySelectorAll('.team-player-box');
+
+// Add event listeners for drag and drop events
+playerBoxes.forEach((box) => {
+    // Allow the box to accept a draggable player
+    box.addEventListener('dragover', (event) => {
+        event.preventDefault();
+    });
+
+    // Handle the dragstart event
+    box.addEventListener('dragstart', (event) => {
+        // Add the "dragged" class to the dragged element
+        lastDraggedElement = event.target;
+        lastDraggedElement.classList.add('dragged');
+    });
+
+    // Handle the drop event
+    box.addEventListener('drop', handleDropEvent);
+});
+
+teamPlayerBoxes.forEach((box) => {
+    // Allow the box to accept a draggable player
+    box.addEventListener('dragover', (event) => {
+        event.preventDefault();
+    });
+
+    // Handle the drop event
+    box.addEventListener('drop', handleDropEvent);
+});
+
+function handleDropEvent(event) {
+    // Get the dragged player's ID from the last dragged element
+    const playerElement = document.querySelector('.dragged');
+    const playerId = playerElement.getAttribute('id');
+
+    // Remove the "dragged" class from the last dragged element
+    playerElement.classList.remove('dragged');
+
+    if (playerId) {
+        // Get the dragged player's role
+        const playerElementById = document.getElementById(playerId);
+        const playerClasses = playerElementById.classList;
+        const playerRole = playerClasses[0];
+
+        // Assign the player to the position (box)
+        const positionId = this.id; // Use "this" to refer to the current team-player-box
+
+        // Update the input value for the respective position
+        const inputElement = document.querySelector(`input[name="${positionId}"]`);
+
+        console.log(inputElement);
+
+        if (inputElement) {
+            inputElement.value = playerId;
+            console.log(`Player ${playerId} assigned to position ${positionId}`);
+        } else {
+            console.log('Input element not found for position', positionId);
+        }
+
+        // Update the player name in the current number box
+        const currentNumberBox = document.getElementById(`${positionId}-Current`);
+        if (currentNumberBox) {
+            currentNumberBox.innerText = playerElementById.innerText;
+        }
+    }
+
+    // Prevent the default drop behavior
+    event.preventDefault();
+}
+
+//// Save Team Positions
+//function saveTeamPositions(playerId, positionId) {
+//    const data = { playerId: playerId, positionId: positionId };
+
+//    $.ajax({
+//        url: '/Game/SaveTeamPositions',
+//        type: 'POST',
+//        data: data,
+//        success: function () {
+//            console.log('Team positions saved successfully.');
+//        },
+//        error: function () {
+//            console.log('Error occurred while saving team positions.');
+//        }
+//    });
+//}

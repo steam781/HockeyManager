@@ -4,6 +4,7 @@ using static Google.Protobuf.WellKnownTypes.Field.Types;
 using HockeyManager.Models;
 using System.Collections.Generic;
 using static HockeyManager.Models.Player;
+using System.Numerics;
 
 namespace HockeyManager.Controllers
 {
@@ -15,17 +16,59 @@ namespace HockeyManager.Controllers
         }
         public IActionResult MyTeam()
         {
-
             int? teamID = HttpContext.Session.GetInt32("teamID");
             if (!teamID.HasValue)
             {
                 // handle case where team ID is not set in session
             }
 
-            TeamPlayers teamPlayers = Models.PlayerManager.getAllOwnedPlayers(teamID.Value);
 
-            return View(teamPlayers);
+            MyTeam teamInfo = HockeyManager.Models.MyTeam.GetSingleTeamInfo(teamID.Value);
+
+            if (teamInfo != null)
+            {
+                teamInfo.TeamPlayers = Models.PlayerManager.getAllOwnedPlayers(teamID.Value).Players.ToList();
+                teamInfo.TeamPlayerRoles = teamInfo.TeamPlayers; // Set the TeamPlayerRoles list to the TeamPlayers list
+            }
+
+            return View(teamInfo);
         }
+
+
+
+        public IActionResult MyTeamPartial(int id)
+        {
+            MyTeam teamInfo = HockeyManager.Models.MyTeam.GetSingleTeamInfo(id);
+            teamInfo.TeamPlayerRoles = Models.PlayerManager.getAllOwnedPlayers(id).Players.ToList(); // Set the TeamPlayerRoles list
+            ViewBag.SelectedPlayerId = id;
+            return PartialView("MyTeamPartial", teamInfo);
+        }
+
+
+
+        public IActionResult SaveTeamPositions(MyTeam t)
+        {
+            int? teamID = HttpContext.Session.GetInt32("teamID");
+            if (!teamID.HasValue)
+            {
+                // handle case where team ID is not set in session
+            }
+
+            // Call the SaveTeamPositions method and pass the team ID and MyTeam object
+            Models.MyTeam.SaveTeamPositions(teamID.Value, t);
+
+            MyTeam teamInfo = HockeyManager.Models.MyTeam.GetSingleTeamInfo(teamID.Value);
+
+            if (teamInfo != null)
+            {
+                teamInfo.TeamPlayers = Models.PlayerManager.getAllOwnedPlayers(teamID.Value).Players.ToList();
+            }
+
+            return View("MyTeam", teamInfo);
+        }
+
+
+
         public IActionResult MyTeamPlayer(int id)
         {
 

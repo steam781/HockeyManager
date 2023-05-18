@@ -1,0 +1,21 @@
+﻿@model HockeyManager.Models.MyTeam
+
+@using HockeyManager.Models
+
+<form asp-action="SaveTeamPositions" method="post">
+    <img class="rink-standing-image" src="~/media/RinkStanding.png" />
+    <div class="right-box-team">
+        @foreach (var player in Model.TeamPlayerRoles)
+        {
+            <div class="team-player-box" id="@player.role">
+                <div class="center-text current-number" id="(@player.role)Current">@player.firstname @player.lastname</div>
+                <div class="center-text current-player">@player.role</div>
+            </div>
+            <input type="hidden" id="@player.role" name="@player.role" value="@player.ID" placeholder="@player.role" />
+        }
+    </div>
+    <button type="submit">Submit</button>
+</form>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="~/js/inside.js"></script>

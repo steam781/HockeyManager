@@ -1,7 +1,6 @@
-﻿@model HockeyManager.Models.TeamPlayers
-<head>
+﻿@model HockeyManager.Models.MyTeam
+@using HockeyManager.Models
 
-</head>
 <container>
     <div class="Important-message">
         <h1>@ViewBag.Meddelande</h1>
@@ -12,17 +11,18 @@
     <content class="split-grid">
         @{
             <div class="left-box">
-                <h1>@Model.teamname</h1>
+                <h1>@Model.TeamName</h1>
                 <label for="role-filter">Filter by Role:</label>
                 <select id="role-filter">
                     <option value="">All Roles</option>
                     <option value="C">C</option>
-                    <option value="D">D</option>
+                    <option value="LD">LD</option>
+                    <option value="RD">RD</option>
                     <option value="RW">RW</option>
                     <option value="LW">LW</option>
                     <option value="G">G</option>
                 </select>
-                <table class="Player-table">
+                <table class="Player-table" id="playerTable">
                     <tr class="player-box">
                         <td class="number">Number:</td>
                         <td class="center-text name">Name:</td>
@@ -32,13 +32,11 @@
                         <td class="center-text power">Pwr:</td>
                     </tr>
 
-                    @foreach (var p in Model.Players)
+                    @foreach (var p in Model.TeamPlayers)
                     {
-                        <tr class="player-box" data-role="@p.role">
+                        <tr class="@p.role player player-box" id="@p.ID" draggable="true" value="@p.ID">
                             <td class="center-text number">@p.number</td>
-                            <td class="center-text name">
-                                <a href="/Player/Details/@p.ID">@p.firstname @p.lastname</a>
-                            </td>
+                            <td class="center-text name">@p.firstname @p.lastname</td>
                             <td class="center-text line">|</td>
                             <td class="center-text role">@p.role</td>
                             <td class="center-text line">|</td>
@@ -48,13 +46,12 @@
                 </table>
                 <div id="pagination"></div>
             </div>
-            <div class="right-box">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
+            MyTeam teamInfo = HockeyManager.Models.MyTeam.GetSingleTeamInfo(Model.TeamID);
+            <div class="right-box justify-center">
+                @await Html.PartialAsync("MyTeamPartial", teamInfo)
             </div>
         }
     </content>
 </container>
 <script src="~/js/inside.js"></script>
+
