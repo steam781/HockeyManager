@@ -11,17 +11,17 @@ namespace HockeyManager.Models
         public string Name { get; set; } = "";
         public string Logocode { get; set; } = "";
         public int LF { get; set; } = 0;
-        //LFPID = LeftForwardPlayerID 
+        //LF = LeftForwardPlayerID 
         public int RF { get; set; } = 0;
-        //RFPID = RightForwardPlayerID 
+        //RF = LeftForwardPlayerID 
         public int C { get; set; } = 0;
-        //CPID = CenterPlayerID
+        //C = CenterPlayerID
         public int LD { get; set; } = 0;
-        //LDPID = LeftDefenderPlayerID
+        //LD = LeftDefenderPlayerID
         public int RD { get; set; } = 0;
-        //RDPID = RightDefenderPlayerID
+        //RD = RightDefenderPlayerID
         public int G { get; set; } = 0;
-        //GPID = GoliePlayerID
+        //G = GoliePlayerID
         public int GamesPlayed { get; set; } = 0;
         public int Goals { get; set; } = 0;
         public int GoalsAgainst { get; set; } = 0;
@@ -109,7 +109,7 @@ namespace HockeyManager.Models
 
             List<MyTeam> TeamInfo = new List<MyTeam>();
             MySqlConnection conn = new MySqlConnection(conStr);
-            MySqlCommand MyCom = new MySqlCommand("SELECT Player.ID, Player.firstname, Player.lastname, Player.number, Player.role FROM Player LEFT JOIN Team AS TeamLF ON Player.ID = TeamLF.LeftForwardPlayerID LEFT JOIN Team AS TeamC ON Player.ID = TeamC.CenterPlayerID LEFT JOIN Team AS TeamRF ON Player.ID = TeamRF.RightForwardPlayerID LEFT JOIN Team AS TeamLD ON Player.ID = TeamLD.LeftDefenderPlayerID LEFT JOIN Team AS TeamRD ON Player.ID = TeamRD.RightDefenderPlayerID LEFT JOIN Team AS TeamG ON Player.ID = TeamG.GoliePlayerID WHERE TeamLF.TeamID = @teamID OR TeamC.TeamID = @teamID OR TeamRF.TeamID = @teamID OR TeamLD.TeamID = @teamID OR TeamRD.TeamID = @teamID OR TeamG.TeamID = @teamID", conn);
+            MySqlCommand MyCom = new MySqlCommand("SELECT Player.ID, Player.firstname, Player.lastname, Player.number, Player.role FROM Player LEFT JOIN Team AS TeamLF ON Player.ID = TeamLF.LeftForwardPlayerID LEFT JOIN Team AS TeamC ON Player.ID = TeamC.CenterPlayerID LEFT JOIN Team AS TeamRF ON Player.ID = TeamRF.LeftForwardPlayerID LEFT JOIN Team AS TeamLD ON Player.ID = TeamLD.LeftDefenderPlayerID LEFT JOIN Team AS TeamRD ON Player.ID = TeamRD.RightDefenderPlayerID LEFT JOIN Team AS TeamG ON Player.ID = TeamG.GoliePlayerID WHERE TeamLF.TeamID = @teamID OR TeamC.TeamID = @teamID OR TeamRF.TeamID = @teamID OR TeamLD.TeamID = @teamID OR TeamRD.TeamID = @teamID OR TeamG.TeamID = @teamID", conn);
 
             // Add the parameter to the command
             MyCom.Parameters.AddWithValue("@teamID", teamID);
@@ -148,7 +148,7 @@ namespace HockeyManager.Models
                 MySqlCommand updateCommand = new MySqlCommand(
                     "UPDATE `Team` SET " +
                     "`LeftForwardPlayerID` = (CASE WHEN `TeamID` = @teamID THEN @lfpid ELSE `LeftForwardPlayerID` END), " +
-                    "`RightForwardPlayerID` = (CASE WHEN `TeamID` = @teamID THEN @rfpid ELSE `RightForwardPlayerID` END), " +
+                    "`LeftForwardPlayerID` = (CASE WHEN `TeamID` = @teamID THEN @rfpid ELSE `LeftForwardPlayerID` END), " +
                     "`CenterPlayerID` = (CASE WHEN `TeamID` = @teamID THEN @cpid ELSE `CenterPlayerID` END), " +
                     "`LeftDefenderPlayerID` = (CASE WHEN `TeamID` = @teamID THEN @ldpid ELSE `LeftDefenderPlayerID` END), " +
                     "`RightDefenderPlayerID` = (CASE WHEN `TeamID` = @teamID THEN @rdpid ELSE `RightDefenderPlayerID` END), " +

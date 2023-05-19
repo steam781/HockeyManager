@@ -24,17 +24,9 @@ content {
     margin:10px;
     padding:10px;
 }
-form{
-    
-}
 #pagination {
     position: sticky;
     bottom: 0;
-}
-.Important-message {
-    position:absolute;
-    top:0;
-    width:100%;
 }
 .split-grid {
     display:grid;
@@ -51,6 +43,7 @@ form{
     height: 100%;
     display: flex;
     justify-content: center;
+    margin-top:50px;
 }
 .right-box-team {
     display: flex;
@@ -60,9 +53,10 @@ form{
     top:0px;
 }
 button.submit {
-    position:absolute;
-    top:-10px;
-    left:-20px
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: -55px;
 }
 .player-box {
     width: 100%;
@@ -73,23 +67,24 @@ button.submit {
     display: flex;
     justify-content: space-evenly;
 }
-.player-click:hover {
-    background-color: rgba(0, 140, 241, 1);
-    box-shadow: 6px 4px 10px rgba(0, 0, 0, 0.7);
-    color: black;
-}
-.player-click:active {
-    background-color: rgba(0, 140, 241, 1);
-    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.7);
-    color: black;
-}
-.selected {
-    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.7);
-}
+    .player-click:hover {
+        background-color: rgba(0, 140, 241, 1);
+        box-shadow: 6px 4px 10px rgba(0, 0, 0, 0.7);
+        color: black;
+    }
+    .player-click:active {
+        background-color: rgba(0, 140, 241, 1);
+        box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.7);
+        color: black;
+    }
+    .player-click.selected {
+        box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.7);
+    }
 .player-detail {
     display: flex;
     flex-direction: column;
     height: 100%;
+    width: 100%;
     position: sticky;
     top: 0;
 }
@@ -110,28 +105,22 @@ button.submit {
 }
 .player-basic-info{
     display:grid;
-    grid-template-areas:"player-image player-info"
-}
-.player-advanced-info{
-
-}
-.player-actions-info{
-
+    grid-template-areas:"player-image player-info";
 }
 .team-player-box {
     color: white;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
     border-radius: 100px;
     border: solid;
     border-color: black;
     background-color: rgb(2, 43, 58);
     transition: left 0.3s, top 0.3s;
 }
-    .team-player-box#LW {
+    .team-player-box#LF {
         position: absolute;
         top:470px;
         left:40px;
@@ -141,7 +130,7 @@ button.submit {
         top: 470px;
         left: 208px;
     }
-    .team-player-box#RW {
+    .team-player-box#RF {
         position: absolute;
         top: 470px;
         left: 375px;
@@ -214,6 +203,30 @@ nav {
     height:100%;
 }
 
+.nav-button {
+    padding:5px;
+}
+    .nav-button:hover {
+        background-color: rgba(64, 64, 64, 0.8);
+        box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.7);
+    }
+    .nav-button:active {
+        background-color: rgba(0, 140, 241, 0.2)
+    }
+    .nav-button.selected {
+        background-color: rgba(0, 176, 240, 0.2);
+    }
+        .nav-button.selected::after {
+            content: "";
+            position: absolute;
+            left: 290px;
+            height: 27px;
+            width: 4px;
+            border:hidden;
+            border-radius: 4px;
+            background-color: rgba(0, 140, 241, 1);
+        }
+
 .nav-top-middle {
     display: none;
 }
@@ -266,6 +279,8 @@ a {
         background-color: #fff;
         margin: 5px;
     }
+
+
 @media screen and (max-width: 1420px) {
     .rink-standing-image{
         width:100%;
@@ -277,7 +292,7 @@ a {
         width: 460px;
         height: auto;
     }
-    .team-player-box#LW {
+    .team-player-box#LF {
         position: absolute;
         top: 410px;
         left: 20px;
@@ -289,7 +304,7 @@ a {
         left: 176px;
     }
 
-    .team-player-box#RW {
+    .team-player-box#RF {
         position: absolute;
         top: 410px;
         left: 330px;
@@ -318,7 +333,7 @@ a {
         width: 430px;
         height: auto;
     }
-    .team-player-box#LW {
+    .team-player-box#LF {
         position: absolute;
         top: 380px;
         left: 20px;
@@ -330,7 +345,7 @@ a {
         left: 164px;
     }
 
-    .team-player-box#RW {
+    .team-player-box#RF {
         position: absolute;
         top: 380px;
         left: 300px;
@@ -362,7 +377,7 @@ a {
         width: 370px;
         height: auto;
     }
-    .team-player-box#LW {
+    .team-player-box#LF {
         position: absolute;
         top: 320px;
         left: 10px;
@@ -374,7 +389,7 @@ a {
         left: 131px;
     }
 
-    .team-player-box#RW {
+    .team-player-box#RF {
         position: absolute;
         top: 320px;
         left: 250px;
@@ -404,7 +419,7 @@ a {
         width: 330px;
         height: auto;
     }
-    .team-player-box#LW {
+    .team-player-box#LF {
         position: absolute;
         top: 280px;
         left: 5px;
@@ -416,7 +431,7 @@ a {
         left: 115px;
     }
 
-    .team-player-box#RW {
+    .team-player-box#RF {
         position: absolute;
         top: 280px;
         left: 225px;
@@ -446,7 +461,7 @@ a {
         height: auto;
     }
 
-    .team-player-box#LW {
+    .team-player-box#LF {
         position: absolute;
         top: 260px;
         left: 0px;
@@ -458,7 +473,7 @@ a {
         left: 100px;
     }
 
-    .team-player-box#RW {
+    .team-player-box#RF {
         position: absolute;
         top: 260px;
         left: 200px;
@@ -487,7 +502,7 @@ a {
         display:none;
     }
 
-    .team-player-box#LW {
+    .team-player-box#LF {
         position: initial;
     }
 
@@ -495,7 +510,7 @@ a {
         position: initial;
     }
 
-    .team-player-box#RW {
+    .team-player-box#RF {
         position: initial;
     }
 

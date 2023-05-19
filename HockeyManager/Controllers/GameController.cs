@@ -5,17 +5,21 @@ using HockeyManager.Models;
 using System.Collections.Generic;
 using static HockeyManager.Models.Player;
 using System.Numerics;
+using Microsoft.AspNetCore.Identity;
 
 namespace HockeyManager.Controllers
 {
     public class GameController : Controller
     {
+        string Message = "";
         public IActionResult Home()
         {
+            
             return View();
         }
         public IActionResult MyTeam()
         {
+            
             int? teamID = HttpContext.Session.GetInt32("teamID");
             if (!teamID.HasValue)
             {
@@ -38,6 +42,7 @@ namespace HockeyManager.Controllers
 
         public IActionResult MyTeamPartial(int id)
         {
+            
             MyTeam teamInfo = HockeyManager.Models.MyTeam.GetSingleTeamInfo(id);
             teamInfo.TeamPlayerRoles = Models.PlayerManager.getAllOwnedPlayers(id).Players.ToList(); // Set the TeamPlayerRoles list
             ViewBag.SelectedPlayerId = id;
@@ -51,10 +56,9 @@ namespace HockeyManager.Controllers
             int? teamID = HttpContext.Session.GetInt32("teamID");
             if (!teamID.HasValue)
             {
-                // handle case where team ID is not set in session
+                TempData["Message"] = "team id was null >; look-> " + teamID;
             }
 
-            // Call the SaveTeamPositions method and pass the team ID and MyTeam object
             Models.MyTeam.SaveTeamPositions(teamID.Value, t);
 
             MyTeam teamInfo = HockeyManager.Models.MyTeam.GetSingleTeamInfo(teamID.Value);
@@ -64,6 +68,8 @@ namespace HockeyManager.Controllers
                 teamInfo.TeamPlayers = Models.PlayerManager.getAllOwnedPlayers(teamID.Value).Players.ToList();
             }
 
+            TempData["Message"] = "Player positions saved " + t;
+
             return View("MyTeam", teamInfo);
         }
 
@@ -71,21 +77,16 @@ namespace HockeyManager.Controllers
 
         public IActionResult MyTeamPlayer(int id)
         {
-
             Player p = PlayerManager.getSinglePlayerById(id);
 
             return View(p);
         }
         public IActionResult PlayerTrain(int id, Player p, int cost, int tempPower)
         {
-            // Retrieve the user data from the session
             int? userId = HttpContext.Session.GetInt32("id");
             int? teamId = HttpContext.Session.GetInt32("teamID");
             int? currency = HttpContext.Session.GetInt32("currency");
 
-
-
-            // Create a new User object with the retrieved data
             User u = new User
             {
                 ID = userId ?? 0,
@@ -93,25 +94,88 @@ namespace HockeyManager.Controllers
                 Currency = currency ?? 0
             };
 
-
-            // Calculate the updated currency and power values
             int updatedCurrency = u.Currency - cost;
             int updatedPower = p.power + tempPower;
 
-            // Update the player's power and user's currency in the database
             PlayerManager.trainPlayer(p, updatedPower, u, updatedCurrency);
 
-            // Update the Players Session
-            ;
             HttpContext.Session.SetInt32("currency", updatedCurrency);
 
             return View("MyTeamPlayer", p);
         }
 
+        public IActionResult BuyPlayer(int id)
+        {
+            int userID = HttpContext.Session.GetInt32("id") ?? 0; 
+
+            Player player = Models.PlayerManager.getSinglePlayerById(id);
+            User user = Models.User.GetUserByID(userID);
+
+            if (player != null && user != null)
+            {
+                int playerValue = player.price;
+
+                if (user.Currency >= playerValue)
+                {
+                    PlayerManager.BuyPlayer(id, user.TeamID);
+                    Models.User.DecreaseCurrency(userID, playerValue);
+                    int oldCurrency = HttpContext.Session.GetInt32("currency") ?? 0;
+                    if (oldCurrency != 0)
+                    {
+                        int newCurrency = oldCurrency - playerValue;
+                        HttpContext.Session.SetInt32("currency", newCurrency);
+                    }
+                    TempData["Message"] = "Player succesfully purchased. Welcome " + player.firstname + " " + player.lastname + " to the team";
+                    if (user.Currency >= 100000)
+                    {
+                        TempData["Message"] = "Upon showing the shere size of your bankaccount to " + player.firstname + " " + player.lastname + " they faint";
+                    }
+                }
+                else
+                {
+                    // insufficient funds error
+                    TempData["Message"] = user.Currency + "$ / 'YOU'RE BROKE! YOUR FUCKING POOR!' - Andre Tate 2022";
+                }
+            }
+            else
+            {
+                //player or user not found error
+                TempData["Message"] = "Player: " + player + " or User: " + user + " not found";
+            }
+
+            return RedirectToAction("Home", "Game");
+        }
+
+
+
+        public IActionResult SellPlayer(int id)
+        {
+            int userID = HttpContext.Session.GetInt32("id") ?? 0;
+
+            Player player = Models.PlayerManager.getSinglePlayerById(id);
+            User user = Models.User.GetUserByID(userID);
+
+            if (player != null && user != null)
+            {
+                int playerValue = player.price;
+
+                PlayerManager.SellPlayer(id);
+                Models.User.IncreaseCurrency(userID, playerValue);
+                int oldCurrency = HttpContext.Session.GetInt32("currency") ?? 0;
+                int newCurrency = oldCurrency - playerValue;
+                HttpContext.Session.SetInt32("currency", newCurrency);
+                TempData["Message"] = "Player succesfully sold. Welcome " + player.firstname + " " + player.lastname + " to the streets";
+            }
+            else
+            {
+                TempData["Message"] = "Player: " + player + " or User: " + user + " not found";
+            }
+
+            return RedirectToAction("Home", "Game");
+        }
 
         public IActionResult Player(int playerId)
         {
-
             int? teamID = HttpContext.Session.GetInt32("teamID");
             if (!teamID.HasValue)
             {
@@ -140,14 +204,17 @@ namespace HockeyManager.Controllers
 
         public IActionResult Leaderboard()
         {
+            TempData["Message"] = "";
             return View();
         }
         public IActionResult Statistics()
         {
+            TempData["Message"] = "";
             return View();
         }
         public IActionResult History()
         {
+            TempData["Message"] = "";
             return View();
         }
     }

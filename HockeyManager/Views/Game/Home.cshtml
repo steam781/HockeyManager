@@ -14,6 +14,9 @@
         const encryptedPass = localStorage.getItem('Password');
         console.log(encryptedMail + ", " + encryptedPass);
     </script>
+    <div class="Important-message">
+        <div class="center-text"><p>@TempData["Message"]</p></div>
+    </div>
     <container>
         <div class="nav-box">@Html.Partial("NavPartial.cshtml")</div>
         <content class="content">

@@ -7,17 +7,82 @@
 <form asp-action="SaveTeamPositions" method="post">
     <img class="rink-standing-image" src="~/media/RinkStanding.png" />
     <div class="right-box-team">
-        @foreach (var player in Model.TeamPlayerRoles)
+        @if (Model.LF != 0)
         {
-            <div class="team-player-box" id="@player.role">
-                <div class="center-text current-number" id="(@player.role)Current">@player.firstname @player.lastname</div>
-                <div class="center-text current-player">@player.role</div>
-            </div>
-            <input type="hidden" id="@player.role" name="@player.role" value="@player.ID" placeholder="@player.role" />
+            var player = Model.TeamPlayerRoles.FirstOrDefault(p => p.ID == Model.LF);
+            if (player != null)
+            {
+                <div class="team-player-box" id="LF" droppable="true" data-position-id="LF">
+                    <div class="center-text current-number" id="LFCurrent">@player.firstname @player.lastname</div>
+                    <div class="center-text current-player">LF</div>
+                </div>
+                <input type="hidden" id="LFInput" name="LF" value="@(player?.ID ?? 0)" placeholder="LF" />
+            }
+        }
+        @if (Model.RF != 0)
+        {
+            var player = Model.TeamPlayerRoles.FirstOrDefault(p => p.ID == Model.RF);
+            if (player != null)
+            {
+                <div class="team-player-box" id="RF" droppable="true" data-position-id="RF">
+                    <div class="center-text current-number" id="RFCurrent">@player.firstname @player.lastname</div>
+                    <div class="center-text current-player">RF</div>
+                </div>
+                <input type="hidden" id="RFInput" name="RF" value="@(player?.ID ?? 0)" placeholder="RF" />
+            }
+        }
+        @if (Model.C != 0)
+        {
+            var player = Model.TeamPlayerRoles.FirstOrDefault(p => p.ID == Model.C);
+            if (player != null)
+            {
+                <div class="team-player-box" id="C" droppable="true" data-position-id="C">
+                    <div class="center-text current-number" id="CCurrent">@player.firstname @player.lastname</div>
+                    <div class="center-text current-player">C</div>
+                </div>
+                <input type="hidden" id="CInput" name="C" value="@(player?.ID ?? 0)" placeholder="C" />
+            }
+        }
+        @if (Model.LD != 0)
+        {
+            var player = Model.TeamPlayerRoles.FirstOrDefault(p => p.ID == Model.LD);
+            if (player != null)
+            {
+                <div class="team-player-box" id="LD" droppable="true" data-position-id="LD">
+                    <div class="center-text current-number" id="LDCurrent">@player.firstname @player.lastname</div>
+                    <div class="center-text current-player">LD</div>
+                </div>
+                <input type="hidden" id="LDInput" name="LD" value="@(player?.ID ?? 0)" placeholder="LD" />
+            }
+        }
+        @if (Model.RD != 0)
+        {
+            var player = Model.TeamPlayerRoles.FirstOrDefault(p => p.ID == Model.RD);
+            if (player != null)
+            {
+                <div class="team-player-box" id="RD" droppable="true" data-position-id="RD">
+                    <div class="center-text current-number" id="RDCurrent">@player.firstname @player.lastname</div>
+                    <div class="center-text current-player">RD</div>
+                </div>
+                <input type="hidden" id="RDInput" name="RD" value="@(player?.ID ?? 0)" placeholder="RD" />
+            }
+        }
+        @if (Model.G != 0)
+        {
+            var player = Model.TeamPlayerRoles.FirstOrDefault(p => p.ID == Model.G);
+            if (player != null)
+            {
+                <div class="team-player-box" id="G" droppable="true" data-position-id="G">
+                    <div class="center-text current-number" id="GCurrent">@player.firstname @player.lastname</div>
+                    <div class="center-text current-player">G</div>
+                </div>
+                <input type="hidden" id="GInput" name="G" value="@(player?.ID ?? 0)" placeholder="G" />
+            }
         }
     </div>
     <button type="submit" class="submit Action-button">Submit</button>
 </form>
+
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="~/js/inside.js"></script>

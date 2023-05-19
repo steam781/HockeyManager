@@ -78,3 +78,7 @@
 	{
 	wasting my time
 	}
+2023-05-19
+	{
+	HockeyManager? more like PlayerManager 
+	}

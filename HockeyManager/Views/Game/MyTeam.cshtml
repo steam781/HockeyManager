@@ -1,6 +1,11 @@
 ﻿@model HockeyManager.Models.MyTeam
 @using HockeyManager.Models
 
+<link rel="stylesheet" type="text/css" href="~/css/Inside.css">
+
+<div class="Important-message">
+    <h1>@ViewBag.Message   </h1>
+</div>
 <container>
     <div class="Important-message">
         <h1>@ViewBag.Meddelande</h1>
@@ -18,8 +23,8 @@
                     <option value="C">C</option>
                     <option value="LD">LD</option>
                     <option value="RD">RD</option>
-                    <option value="RW">RW</option>
-                    <option value="LW">LW</option>
+                    <option value="RF">RF</option>
+                    <option value="LF">LF</option>
                     <option value="G">G</option>
                 </select>
                 <table class="Player-table" id="playerTable">
@@ -34,7 +39,7 @@
 
                     @foreach (var p in Model.TeamPlayers)
                     {
-                        <tr class="@p.role player player-box" id="@p.ID" draggable="true" value="@p.ID">
+                        <tr class="@p.role player-box" id="@p.role" draggable="true" data-role="@p.role" data-id="@p.ID" value="@p.ID">
                             <td class="center-text number">@p.number</td>
                             <td class="center-text name">@p.firstname @p.lastname</td>
                             <td class="center-text line">|</td>

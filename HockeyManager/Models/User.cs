@@ -53,6 +53,76 @@ namespace HockeyManager.Models
             conn.Close();
             return singleE;
         }
+        public static User GetUserByID(int id)
+        {
+            string conStr = "server=46.246.45.183;user=OliverEc;port=3306;database=HockeyManager_OE;password=YROSBKEE";
+            using (MySqlConnection conn = new MySqlConnection(conStr))
+            {
+                conn.Open();
+
+                MySqlCommand command = new MySqlCommand("SELECT * FROM User LEFT JOIN Team ON User.ID = Team.OwnerID WHERE User.ID = @ID", conn);
+                command.Parameters.AddWithValue("@ID", id);
+
+                MySqlDataReader reader = command.ExecuteReader();
+
+                User user = null;
+                if (reader.Read())
+                {
+                    user = new User
+                    {
+                        ID = reader.GetInt32("ID"),
+                        TeamID = reader.GetInt32("TeamID"),
+                        Role = reader.GetString("Role"),
+                        Email = reader.GetString("Email"),
+                        Username = reader.GetString("Username"),
+                        Password = reader.GetString("Password"),
+                        Currency = reader.GetInt32("Currency")
+                    };
+                }
+
+                reader.Close();
+                conn.Close();
+
+                return user;
+            }
+        }
+        public static void DecreaseCurrency(int userID, int amount)
+        {
+            string conStr = "server=46.246.45.183;user=OliverEc;port=3306;database=HockeyManager_OE;password=YROSBKEE";
+            using (MySqlConnection conn = new MySqlConnection(conStr))
+            {
+                conn.Open();
+
+                MySqlCommand command = new MySqlCommand("UPDATE `User` SET `Currency` = `Currency` - @amount WHERE `ID` = @ID", conn);
+                command.Parameters.AddWithValue("@amount", amount);
+                command.Parameters.AddWithValue("@ID", userID);
+
+                int rader = command.ExecuteNonQuery();
+
+                command.Dispose();
+                conn.Close();
+            }
+        }
+
+        public static void IncreaseCurrency(int userID, int amount)
+        {
+            string conStr = "server=46.246.45.183;user=OliverEc;port=3306;database=HockeyManager_OE;password=YROSBKEE";
+            using (MySqlConnection conn = new MySqlConnection(conStr))
+            {
+                conn.Open();
+
+                MySqlCommand command = new MySqlCommand("UPDATE `User` SET `Currency` = `Currency` + @amount WHERE `ID` = @ID");
+                command.Parameters.AddWithValue("@amount", amount);
+                command.Parameters.AddWithValue("@ID", userID);
+                command.Connection = conn;
+
+                int rader = command.ExecuteNonQuery();
+
+                command.Dispose();
+                conn.Close();
+            }
+        }
+
         public static bool Register(User u, MyTeam t)
         {
             User newUser = HockeyManager.Models.User.GetUserByMail(u.Email);

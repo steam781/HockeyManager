@@ -1,4 +1,5 @@
 using HockeyManager.Models;
+using Microsoft.AspNetCore.Mvc;
 using MySql.Data;
 using MySql.Data.MySqlClient;
 using System;
@@ -278,6 +279,44 @@ namespace HockeyManager.Models
             if (rader == 0) return false; else return true;
 
 
+        }
+        public static bool BuyPlayer(int id, int teamID)
+        {
+            string conStr = "server=46.246.45.183;user=OliverEc;port=3306;database=HockeyManager_OE;password=YROSBKEE";
+            using (MySqlConnection conn = new MySqlConnection(conStr))
+            {
+                conn.Open();
+
+                MySqlCommand MyCom = new MySqlCommand("UPDATE `Player` SET `teamID` = @teamID WHERE `ID` = @ID", conn);
+                MyCom.Parameters.AddWithValue("@teamID", teamID);
+                MyCom.Parameters.AddWithValue("@ID", id);
+
+                MyCom.ExecuteNonQuery();
+
+                MyCom.Dispose();
+                conn.Close();
+
+                return true;
+            }
+        }
+        public static bool SellPlayer(int id)
+        {
+            string conStr = "server=46.246.45.183;user=OliverEc;port=3306;database=HockeyManager_OE;password=YROSBKEE";
+            using (MySqlConnection conn = new MySqlConnection(conStr))
+            {
+                conn.Open();
+
+                MySqlCommand MyCom = new MySqlCommand("UPDATE `Player` SET `teamID` = @teamID WHERE `ID` = @ID", conn);
+                MyCom.Parameters.AddWithValue("@teamID", 0);
+                MyCom.Parameters.AddWithValue("@ID", id);
+
+                MyCom.ExecuteNonQuery();
+
+                MyCom.Dispose();
+                conn.Close();
+
+                return true;
+            }
         }
 
     }

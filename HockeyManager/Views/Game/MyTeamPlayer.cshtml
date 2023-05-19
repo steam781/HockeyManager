@@ -5,6 +5,9 @@
 <head>
 
 </head>
+<div class="Important-message">
+    <h1>@ViewBag.Message</h1>
+</div>
 <container>
     <div class="Important-message"><h1>@ViewBag.Meddelande</h1></div>
     <div class="nav-box">@Html.Partial("NavPartial.cshtml")</div>
@@ -37,7 +40,7 @@
                     <input type="hidden" name="power" value="@Model.power">
                     <input type="hidden" name="ID" value="@Model.ID">
                     <input type="hidden" name="tempPower" value="@rnd.Next(1, 3)">
-                    <button type="submit" value="Buy" class="Action-button"></button>
+                    <button type="submit" value="Buy" class="Action-button">Buy Training</button>
                 </div>
             </form>
             <form asp-action="PlayerTrain" method="post">
@@ -53,7 +56,7 @@
                     <input type="hidden" name="power" value="@Model.power">
                     <input type="hidden" name="ID" value="@Model.ID">
                     <input type="hidden" name="tempPower" value="@rnd.Next(2, 6)">
-                    <button type="submit" value="Buy" class="Action-button"></button>
+                    <button type="submit" value="Buy" class="Action-button">Buy Training</button>
                 </div>
             </form>
             <form asp-action="PlayerTrain" method="post">
@@ -69,7 +72,7 @@
                     <input type="hidden" name="power" value="@Model.power">
                     <input type="hidden" name="ID" value="@Model.ID">
                     <input type="hidden" name="tempPower" value="@rnd.Next(5, 11)">
-                    <button type="submit" value="Buy" class="Action-button"></button>
+                    <button type="submit" value="Buy" class="Action-button">Buy Training</button>
                 </div>
             </form>
             <div class="width-100 bg-dark-blue">
