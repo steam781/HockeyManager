@@ -1,0 +1,46 @@
+﻿@*<!DOCTYPE html>
+@model HockeyManager.Models.Trade
+
+<link rel="stylesheet" type="text/css" href="~/css/Inside.css">
+
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="~/css/Inside.css" />
+</head>
+
+<body>
+    <div class="Important-message">
+        <div class="center-text"><p>@TempData["Message"]</p></div>
+    </div>
+    <container>
+        <div class="nav-box">@Html.Partial("NavPartial.cshtml")</div>
+        <content class="content">
+                <h1 class="size1">Trade History:</h1>
+                <table class="history-table" id="historyTable">
+                    <tr class="history-box">
+                        <td class="center-text type">Type:</td>
+                        <td class="center-text line">|</td>
+                        <td class="center-text price">Price:</td>
+                        <td class="center-text line">|</td>
+                        <td class="center-text date">Date:</td>
+                    </tr>
+
+                    @foreach (var t in Model)
+                    {
+                        <tr class="history" data-trade-id="@t.ID">
+                            <td class="center-text type">@Model.type</td>
+                            <td class="center-text line">|</td>
+                            <td class="center-text price">@Model.price</td>
+                            <td class="center-text line">|</td>
+                            <td class="center-text date">@Model.date</td
+                        </tr>
+                    }
+                </table>
+                <div id="pagination"></div>
+        </content>
+    </container>
+    <script src="~/js/inside.js"></script>
+</body>
+</html>
+*@

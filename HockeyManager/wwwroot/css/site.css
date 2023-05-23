@@ -7,8 +7,16 @@ html {
   font-size: 14px;
 }
 
-#text{
+#text {
     display:none;
+}
+
+h1 {
+    font-family: 'Archivo Black', sans-serif;
+}
+
+h2 {
+    font-family: Roboto;
 }
 
 @media (min-width: 768px) {

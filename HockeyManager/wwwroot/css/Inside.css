@@ -53,7 +53,7 @@ content {
     top:0px;
 }
 button.submit {
-    position: fixed;
+    position: absolute;
     left: 0;
     right: 0;
     top: -55px;
@@ -122,33 +122,33 @@ button.submit {
 }
     .team-player-box#LF {
         position: absolute;
-        top:470px;
-        left:40px;
+        top:435px;
+        left:25px;
     }
     .team-player-box#C {
         position: absolute;
-        top: 470px;
-        left: 208px;
+        top: 435px;
+        left: 185px;
     }
     .team-player-box#RF {
         position: absolute;
-        top: 470px;
-        left: 375px;
+        top: 435px;
+        left: 345px;
     }
     .team-player-box#LD {
         position: absolute;
         top: 300px;
-        left: 125px;
+        left: 105px;
     }
     .team-player-box#RD {
         position: absolute;
         top: 300px;
-        left: 290px;
+        left: 260px;
     }
     .team-player-box#G {
         position: absolute;
         top: 50px;
-        left: 208px;
+        left: 185px;
     }
 
 .rink-image {
@@ -157,14 +157,14 @@ button.submit {
 }
 .rink-standing-image {
     width: auto;
-    height: 95vh;
+    height: auto;
 }
 tr {
 }
     tr .number {
         width: 30px;
     }
-    tr .name {
+    tr .name{
         width: 150px;
     }
     tr .role {
@@ -172,6 +172,15 @@ tr {
     }
     tr .power {
         width:30px;
+    }
+    tr .type {
+        width:150px;
+    }
+    tr .price {
+        width: 45px;
+    }
+    tr .date {
+        width: 45px;
     }
 /*---------------------------navbar---------------------------*/
 nav {

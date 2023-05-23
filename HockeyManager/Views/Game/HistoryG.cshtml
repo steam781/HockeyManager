@@ -1,18 +1,21 @@
-﻿@model HockeyManager.Models.TeamPlayers
+﻿@*<!DOCTYPE html>
+@model HockeyManager.Models.Trade
+
+<link rel="stylesheet" type="text/css" href="~/css/Inside.css">
+
+<html lang="en">
+
 <head>
-    <link rel="stylesheet" type="text/css" href="~/css/Inside.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="~/js/inside.js"></script>
+    <link rel="stylesheet" href="~/css/Inside.css" />
 </head>
-<div class="Important-message">
-        <h1>@ViewBag.Message   </h1>
+
+<body>
+    <div class="Important-message">
+        <div class="center-text"><p>@TempData["Message"]</p></div>
     </div>
-<container>
-    <div class="nav-box">
-        @Html.Partial("NavPartial.cshtml")
-    </div>
-    <content class="split-grid">
-        @{
+    <container>
+        <div class="nav-box">@Html.Partial("NavPartial.cshtml")</div>
+        <content class="content">
             <div class="left-box">
                 <h1 class="size1">@Model.TeamName</h1>
                 <label for="role-filter">Filter by Role:</label>
@@ -44,23 +47,15 @@
                             <td class="center-text role">@p.role</td>
                             <td class="center-text line">|</td>
                             <td class="center-text power">@p.power</td
+                            <td class="center-text power">@p.power</td>
                         </tr>
                     }
                 </table>
                 <div id="pagination"></div>
             </div>
-            <div class="right-box">
-                <div id="player-detail" class="player-detail">
-                        @if (Model.SelectedPlayer != null)
-                        {
-                            @Html.Partial("PlayerDetail", Model.SelectedPlayer)
-                        }
-                        else
-                        {
-                            <h2>No player selected.</h2>
-                        }
-                </div>
-            </div>
-        }
-    </content>
-</container>
+        </content>
+    </container>
+    <script src="~/js/inside.js"></script>
+</body>
+</html>
+*@
