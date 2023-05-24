@@ -6,7 +6,7 @@
 
 </head>
 <div class="Important-message">
-    <h1>@ViewBag.Message</h1>
+    <div class="center-text"><p>@TempData["Message"]</p></div>
 </div>
 <container>
     <div class="Important-message"><h1>@ViewBag.Meddelande</h1></div>
@@ -36,6 +36,7 @@
                     <div>
                         <h2>1-2 Power</h2>
                     </div>
+                    <input type="hidden" name="price" value="@Model.price">
                     <input type="hidden" name="cost" value="20">
                     <input type="hidden" name="power" value="@Model.power">
                     <input type="hidden" name="ID" value="@Model.ID">
@@ -52,6 +53,7 @@
                     <div>
                         <h2>2-5 Power</h2>
                     </div>
+                    <input type="hidden" name="price" value="@Model.price">
                     <input type="hidden" name="cost" value="50">
                     <input type="hidden" name="power" value="@Model.power">
                     <input type="hidden" name="ID" value="@Model.ID">
@@ -68,6 +70,7 @@
                     <div>
                         <h2>5-10 Power</h2>
                     </div>
+                    <input type="hidden" name="price" value="@Model.price">
                     <input type="hidden" name="cost" value="100">
                     <input type="hidden" name="power" value="@Model.power">
                     <input type="hidden" name="ID" value="@Model.ID">

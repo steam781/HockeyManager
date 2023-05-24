@@ -167,15 +167,16 @@ namespace HockeyManager.Models
             }
         }
 
-        public static bool trainPlayer(Player p, int updatedPower, User u, int updatedCurrency)
+        public static bool trainPlayer(Player p, int updatedPower, User u, int updatedCurrency, int updatedPrice)
         {
             string conStr = "server=46.246.45.183;user=OliverEc;port=3306;database=HockeyManager_OE;password=YROSBKEE";
             using (MySqlConnection conn = new MySqlConnection(conStr))
             {
                 conn.Open();
 
-                MySqlCommand playerCmd = new MySqlCommand("UPDATE `Player` SET `power` = @power WHERE `ID` = @ID", conn);
+                MySqlCommand playerCmd = new MySqlCommand("UPDATE `Player` SET `power` = @power, `price` = @price WHERE `ID` = @ID", conn);
                 playerCmd.Parameters.AddWithValue("@power", updatedPower);
+                playerCmd.Parameters.AddWithValue("@price", updatedPrice);
                 playerCmd.Parameters.AddWithValue("@ID", p.ID);
 
                 int rader = playerCmd.ExecuteNonQuery();
@@ -280,39 +281,61 @@ namespace HockeyManager.Models
 
 
         }
-        public static bool BuyPlayer(int id, int teamID)
+        public static bool BuyPlayer(int id, int teamID, int price)
         {
             string conStr = "server=46.246.45.183;user=OliverEc;port=3306;database=HockeyManager_OE;password=YROSBKEE";
             using (MySqlConnection conn = new MySqlConnection(conStr))
             {
                 conn.Open();
 
-                MySqlCommand MyCom = new MySqlCommand("UPDATE `Player` SET `teamID` = @teamID WHERE `ID` = @ID", conn);
-                MyCom.Parameters.AddWithValue("@teamID", teamID);
-                MyCom.Parameters.AddWithValue("@ID", id);
+                MySqlCommand playerCmd = new MySqlCommand("UPDATE `Player` SET `teamID` = @teamID WHERE `ID` = @ID", conn);
+                playerCmd.Parameters.AddWithValue("@teamID", teamID);
+                playerCmd.Parameters.AddWithValue("@ID", id);
 
-                MyCom.ExecuteNonQuery();
+                playerCmd.ExecuteNonQuery();
 
-                MyCom.Dispose();
+                int rader = playerCmd.ExecuteNonQuery();
+
+                MySqlCommand HistoryCmd = new MySqlCommand("INSERT INTO `Trade`(`TeamID`, `PlayerID`, `Type`, `OldPrice`) VALUES (@teamID, @playerID, 1, @price)", conn);
+                HistoryCmd.Parameters.AddWithValue("@teamID", teamID );
+                HistoryCmd.Parameters.AddWithValue("@playerID", id);
+                HistoryCmd.Parameters.AddWithValue("@price", price);
+
+                rader = HistoryCmd.ExecuteNonQuery();
+
+                playerCmd.Dispose();
+                HistoryCmd.Dispose();
+
                 conn.Close();
 
                 return true;
             }
         }
-        public static bool SellPlayer(int id)
+        public static bool SellPlayer(int id, int teamID, int price)
         {
             string conStr = "server=46.246.45.183;user=OliverEc;port=3306;database=HockeyManager_OE;password=YROSBKEE";
             using (MySqlConnection conn = new MySqlConnection(conStr))
             {
                 conn.Open();
 
-                MySqlCommand MyCom = new MySqlCommand("UPDATE `Player` SET `teamID` = @teamID WHERE `ID` = @ID", conn);
-                MyCom.Parameters.AddWithValue("@teamID", 0);
-                MyCom.Parameters.AddWithValue("@ID", id);
+                MySqlCommand playerCmd = new MySqlCommand("UPDATE `Player` SET `teamID` = @teamID WHERE `ID` = @ID", conn);
+                playerCmd.Parameters.AddWithValue("@teamID", 0);
+                playerCmd.Parameters.AddWithValue("@ID", id);
 
-                MyCom.ExecuteNonQuery();
+                playerCmd.ExecuteNonQuery();
 
-                MyCom.Dispose();
+                int rader = playerCmd.ExecuteNonQuery();
+
+                MySqlCommand HistoryCmd = new MySqlCommand("INSERT INTO `Trade`(`TeamID`, `PlayerID`, `Type`, `OldPrice`) VALUES (@teamID, @playerID, 2, @price)", conn);
+                HistoryCmd.Parameters.AddWithValue("@teamID", teamID);
+                HistoryCmd.Parameters.AddWithValue("@playerID", id);
+                HistoryCmd.Parameters.AddWithValue("@price", price);
+
+                rader = HistoryCmd.ExecuteNonQuery();
+
+                playerCmd.Dispose();
+                HistoryCmd.Dispose();
+
                 conn.Close();
 
                 return true;

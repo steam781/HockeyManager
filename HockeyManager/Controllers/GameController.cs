@@ -87,6 +87,10 @@ namespace HockeyManager.Controllers
             int? teamId = HttpContext.Session.GetInt32("teamID");
             int? currency = HttpContext.Session.GetInt32("currency");
 
+            int updatedCurrency;
+            int updatedPower;
+            int updatedPrice;
+
             User u = new User
             {
                 ID = userId ?? 0,
@@ -94,13 +98,26 @@ namespace HockeyManager.Controllers
                 Currency = currency ?? 0
             };
 
-            int updatedCurrency = u.Currency - cost;
-            int updatedPower = p.power + tempPower;
-
-            PlayerManager.trainPlayer(p, updatedPower, u, updatedCurrency);
-
-            HttpContext.Session.SetInt32("currency", updatedCurrency);
-
+            if (u.Currency >= cost)
+            {
+                if (p.power < 100 - tempPower)
+                {
+                    updatedCurrency = u.Currency - cost;
+                    updatedPower = p.power + tempPower;
+                    updatedPrice = p.price + (tempPower * 15);
+                    PlayerManager.trainPlayer(p, updatedPower, u, updatedCurrency, updatedPrice);
+                    HttpContext.Session.SetInt32("currency", updatedCurrency);
+                }
+                else
+                {
+                    TempData["Message"] = "Player already max power";
+                }
+            }
+            else
+            {
+                TempData["Message"] = "You dont have enough money";
+            }
+            
             return View("MyTeamPlayer", p);
         }
 
@@ -117,7 +134,7 @@ namespace HockeyManager.Controllers
 
                 if (user.Currency >= playerValue)
                 {
-                    PlayerManager.BuyPlayer(id, user.TeamID);
+                    PlayerManager.BuyPlayer(id, user.TeamID, player.price);
                     Models.User.DecreaseCurrency(userID, playerValue);
                     int oldCurrency = HttpContext.Session.GetInt32("currency") ?? 0;
                     if (oldCurrency != 0)
@@ -159,7 +176,7 @@ namespace HockeyManager.Controllers
             {
                 int playerValue = player.price;
 
-                PlayerManager.SellPlayer(id);
+                PlayerManager.SellPlayer(id, user.TeamID, player.price);
                 Models.User.IncreaseCurrency(userID, playerValue);
                 int oldCurrency = HttpContext.Session.GetInt32("currency") ?? 0;
                 int newCurrency = oldCurrency - playerValue;
@@ -212,10 +229,13 @@ namespace HockeyManager.Controllers
             TempData["Message"] = "";
             return View();
         }
-        public IActionResult History()
+        public IActionResult HistoryT()
         {
             TempData["Message"] = "";
-            return View();
+            int? teamID = HttpContext.Session.GetInt32("teamID");
+            Trade trade = HockeyManager.Models.TradeManager.getAllTrades(teamID.Value);
+
+            return View(trade);
         }
     }
 }

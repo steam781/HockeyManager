@@ -3,6 +3,7 @@ using MySql.Data;
 using MySql.Data.MySqlClient;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Reflection.PortableExecutable;
 using System.Xml.Linq;
 
 namespace HockeyManager.Models
@@ -129,7 +130,7 @@ namespace HockeyManager.Models
 
 
             // Check if user already exists
-            if (newUser.Email == u.Email)
+            if (newUser.Email == u.Email || newUser == null || newUser.Email == null || newUser.Username == null)
             {
                 return false;
             }
@@ -138,19 +139,34 @@ namespace HockeyManager.Models
             {
                 conn.Open();
 
-                MySqlCommand UserCmd = new MySqlCommand("INSERT INTO User(Email, Username, Password) VALUES (@MAIL, @USER, @PASS)", conn);
+                MySqlCommand NewUserCmd = new MySqlCommand("INSERT INTO User(Email, Username, Password) VALUES (@MAIL, @USER, @PASS)", conn);
 
+                NewUserCmd.Parameters.AddWithValue("@MAIL", u.Email);
+                NewUserCmd.Parameters.AddWithValue("@USER", u.Username);
+                NewUserCmd.Parameters.AddWithValue("@PASS", u.Password);
+
+                int rowsAffected = NewUserCmd.ExecuteNonQuery();
+
+                NewUserCmd.Dispose();
+
+                MySqlCommand UserCmd = new MySqlCommand("SELECT `ID` FROM `User` WHERE `Email` = @MAIL", conn);
                 UserCmd.Parameters.AddWithValue("@MAIL", u.Email);
-                UserCmd.Parameters.AddWithValue("@USER", u.Username);
-                UserCmd.Parameters.AddWithValue("@PASS", u.Password);
 
-                int rowsAffected = UserCmd.ExecuteNonQuery();
+                int TempID = 0;
 
+                MySqlDataReader reader = UserCmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    TempID = reader.GetInt32("ID");
+                }
+
+                reader.Close();
                 UserCmd.Dispose();
+
 
                 MySqlCommand TeamCmd = new MySqlCommand("INSERT INTO Team(OwnerID, Name) VALUES (@OID, @NAME)", conn);
 
-                TeamCmd.Parameters.AddWithValue("@OID", u.ID);
+                TeamCmd.Parameters.AddWithValue("@OID", TempID);
                 TeamCmd.Parameters.AddWithValue("@NAME", u.Username + "'s Team");
 
                 rowsAffected = TeamCmd.ExecuteNonQuery();
