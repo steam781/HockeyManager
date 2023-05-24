@@ -31,7 +31,7 @@ namespace HockeyManager.Controllers
 
             if (!ModelState.IsValid) return View("index");
 
-            User newUser = HockeyManager.Models.User.GetUserByMail(usr.Email);
+            User newUser = HockeyManager.Models.User.GetUserByMail(usr.Email);   
            
 
             // Check if password is correct

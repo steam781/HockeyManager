@@ -1,12 +1,10 @@
-﻿@*<!DOCTYPE html>
+﻿<!DOCTYPE html>
 @model HockeyManager.Models.Trade
 
-<link rel="stylesheet" type="text/css" href="~/css/Inside.css">
 
 <html lang="en">
 
 <head>
-    <link rel="stylesheet" href="~/css/Inside.css" />
 </head>
 
 <body>
@@ -21,19 +19,35 @@
                     <tr class="history-box">
                         <td class="center-text type">Type:</td>
                         <td class="center-text line">|</td>
-                        <td class="center-text price">Price:</td>
+                        <td class="center-text name">Name:</td>
+                        <td class="center-text price">TradePrice:</td>
+                        <td class="center-text price min1280-Hide">PriceDiffrence:</td>
+                        <td class="center-text price min1280-Hide">CurrentPrice:</td>
                         <td class="center-text line">|</td>
                         <td class="center-text date">Date:</td>
                     </tr>
 
-                    @foreach (var t in Model)
+                    @foreach (var t in Model.Trades)
                     {
-                        <tr class="history" data-trade-id="@t.ID">
-                            <td class="center-text type">@Model.type</td>
+                        string priceDiffClass = t.priceDiffrence >= 0 ? "positive" : "negative";
+                        <tr class="history-box history-click" data-trade-id="@t.ID">
+                            @if (t.type == 1)
+                            {
+                                <td class="center-text type type-text">Purchased</td>
+                                <td class="center-text type type-letter">P</td>
+                            }
+                            @if (t.type == 2)
+                            {
+                                <td class="center-text type type-text">Sold</td>
+                                <td class="center-text type type-letter">S</td>
+                            }
                             <td class="center-text line">|</td>
-                            <td class="center-text price">@Model.price</td>
+                            <td class="center-text name">@t.firstname @t.lastname</td>
+                            <td class="center-text price">@t.oldprice</td>
+                            <td class="center-text price min1280-Hide"><span class="@priceDiffClass">@t.priceDiffrence</span></td>
+                            <td class="center-text price min1280-Hide">@t.price</td>
                             <td class="center-text line">|</td>
-                            <td class="center-text date">@Model.date</td
+                            <td class="center-text date">@t.date</td
                         </tr>
                     }
                 </table>
@@ -43,4 +57,3 @@
     <script src="~/js/inside.js"></script>
 </body>
 </html>
-*@
